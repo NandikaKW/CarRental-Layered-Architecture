@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7126fda7-a10b-4c2c-ab4a-6ccb3759fa04" name="Changes" comment="Commit Layerd" />
+    <list default="true" id="7126fda7-a10b-4c2c-ab4a-6ccb3759fa04" name="Changes" comment="first commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -29,7 +29,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/NandikaKW/Car_Rental__Layerd.git",
+    "url": "https://github.com/NandikaKW/CarRental.git",
     "accountId": "036a6469-edc2-40a7-93c2-3d054dac0dc6"
   }
 }]]></component>
@@ -47,6 +47,7 @@
     "Application.AppInitilizer.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -95,7 +96,7 @@
       <workItem from="1737724124570" duration="450000" />
       <workItem from="1737724814354" duration="4033000" />
       <workItem from="1737732253323" duration="6761000" />
-      <workItem from="1737788654664" duration="578000" />
+      <workItem from="1737788654664" duration="1166000" />
     </task>
     <task id="LOCAL-00001" summary="BoFactory">
       <option name="closed" value="true" />
@@ -113,7 +114,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737720864783</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1737790150642</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737790150642</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,7 +134,8 @@
     </ignored-roots>
     <MESSAGE value="BoFactory" />
     <MESSAGE value="Commit Layerd" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit Layerd" />
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

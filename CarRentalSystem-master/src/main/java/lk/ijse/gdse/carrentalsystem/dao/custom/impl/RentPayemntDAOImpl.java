@@ -75,10 +75,10 @@ public class RentPayemntDAOImpl implements RentPayemntDAO {
         ResultSet resultSet = CrudUtil.execute("SELECT pay_id FROM payment ORDER BY pay_id DESC LIMIT 1");
 
         if (resultSet.next()) {
-            return resultSet.getString("pay_id");  // Return the most recent pay_id directly
+            return resultSet.getString("pay_id");
         }
 
-        return null; // Return null if there are no records
+        return null;
 
     }
 
