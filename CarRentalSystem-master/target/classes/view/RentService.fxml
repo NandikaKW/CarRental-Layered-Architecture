@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="692.0" prefWidth="763.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.carrentalsystem.controller.RentServiceController">
+   <children>
+      <Label layoutX="272.0" layoutY="14.0" text="Rent Service">
+         <font>
+            <Font name="Times New Roman Bold" size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEndDate" layoutX="229.0" layoutY="55.0" text="End Date ">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblRentId" layoutX="10.0" layoutY="55.0" text="Rent ID">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCustomerID" layoutX="3.0" layoutY="91.0" text="Customer ID ">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStartDate" layoutX="236.0" layoutY="88.0" text="Start Date ">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtRentId" layoutX="71.0" layoutY="51.0" promptText="Rent ID" />
+      <TextField fx:id="txtStartDate" layoutX="306.0" layoutY="87.0" prefHeight="26.0" prefWidth="128.0" promptText="Start Date" />
+      <TextField fx:id="txtEndDate" layoutX="294.0" layoutY="53.0" prefHeight="26.0" prefWidth="128.0" promptText="End Date" />
+      <TextField fx:id="txtCustomerId" layoutX="97.0" layoutY="88.0" prefHeight="26.0" prefWidth="123.0" promptText="Customer ID" />
+      <TableView fx:id="tblRent" layoutX="2.0" layoutY="194.0" onMouseClicked="#tblRenClicked" prefHeight="139.0" prefWidth="763.0">
+        <columns>
+          <TableColumn fx:id="colRentId" prefWidth="106.39999079704285" text="Rent ID " />
+          <TableColumn fx:id="colStartDate" prefWidth="126.39996337890625" text="Start Date " />
+            <TableColumn fx:id="colEndDate" prefWidth="148.00001525878906" text="End Date " />
+            <TableColumn fx:id="colCustomerID" prefWidth="182.39996337890625" text="Customer ID" />
+            <TableColumn fx:id="colAgrimentID" prefWidth="199.9999877929688" text="AgrimentID" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="6.0" layoutY="156.0" onAction="#btnSaveOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Save">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="93.0" layoutY="156.0" onAction="#btnDeleteOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Delete ">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnUpdate" buttonType="RAISED" layoutX="204.0" layoutY="156.0" onAction="#btnUpdateOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Update ">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnSearch" buttonType="RAISED" layoutX="310.0" layoutY="156.0" onAction="#btnSearchOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Search">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="404.0" layoutY="156.0" onAction="#btnResetOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Reset">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+      <ComboBox fx:id="ComboYear" layoutX="432.0" layoutY="53.0" onAction="#ComboYearOnAction" prefHeight="27.0" prefWidth="84.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" />
+      <ComboBox fx:id="CombMonth" layoutX="527.0" layoutY="52.0" onAction="#ComboMonthOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-color: black; -fx-border-radius: 8;" />
+      <ComboBox fx:id="ComboDay" layoutX="590.0" layoutY="52.0" onAction="#ComboDayOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 23; -fx-border-color: black; -fx-border-radius: 8;" />
+      <ComboBox fx:id="ComboYearOne" layoutX="444.0" layoutY="87.0" onAction="#ComboYearOneOnAction" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 23; -fx-border-color: black; -fx-border-radius: 8;" />
+      <ComboBox fx:id="CombMonthOne" layoutX="539.0" layoutY="87.0" onAction="#ComboMonthOneOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 23; -fx-border-color: black; -fx-border-radius: 8;" />
+      <ComboBox fx:id="ComboDayOne" layoutX="602.0" layoutY="87.0" onAction="#ComboDayOneOnAction" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 23; -fx-border-color: black; -fx-border-radius: 8;" />
+      <Label fx:id="lblAgreementID" layoutX="6.0" layoutY="121.0" text="Agriment ID">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAgrimentID" layoutX="94.0" layoutY="121.0" prefHeight="26.0" prefWidth="128.0" promptText="Agriment ID" />
+      <JFXButton fx:id="btnReserveVehicle" buttonType="RAISED" layoutY="481.0" onAction="#btnReserveVehicleOnAction" prefWidth="128.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Reserve Vehicle" textFill="#1e1d1d">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnBookVehicle" buttonType="RAISED" layoutX="130.0" layoutY="481.0" onAction="#btnBookVehicleOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Book Vehicle" textFill="#1e1d1d">
+         <font>
+            <Font name="Times New Roman Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="tblCart" layoutX="2.0" layoutY="519.0" onMouseClicked="#tblCartOnClick" prefHeight="198.0" prefWidth="763.0">
+        <columns>
+          <TableColumn fx:id="colVehicleId" prefWidth="218.39999079704285" text="Vehicle Id" />
+            <TableColumn fx:id="colQty" prefWidth="152.00001525878906" text="QTY" />
+            <TableColumn fx:id="colPackageId" prefWidth="188.0" text="Package Id" />
+            <TableColumn fx:id="colRemove" prefWidth="207.20001220703125" text="Remove" />
+        </columns>
+      </TableView>
+      <Label fx:id="lblVehicleID" layoutX="2.0" layoutY="355.0" text="Vehicle ID">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbVehicleId" layoutX="80.0" layoutY="351.0" onAction="#cmbVehicleIdOnAction" prefWidth="150.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" />
+      <Label fx:id="lblModel" layoutX="260.0" layoutY="355.0" prefHeight="18.0" prefWidth="107.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblColor" layoutX="392.0" layoutY="355.0" prefHeight="18.0" prefWidth="107.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCategory" layoutX="514.0" layoutY="354.0" prefHeight="18.0" prefWidth="107.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblQty" layoutX="260.0" layoutY="422.0" text="Qty">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPackageID" layoutX="3.0" layoutY="419.0" text="Package ID">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbPackageId" layoutX="82.0" layoutY="414.0" onAction="#cmbPackageOnAction" prefWidth="150.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" />
+      <Label fx:id="lblQtyOnHand" layoutX="631.0" layoutY="355.0" prefHeight="18.0" prefWidth="107.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCondition" layoutX="5.0" layoutY="451.0" prefHeight="18.0" prefWidth="84.0" text="Condition">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCondition" layoutX="80.0" layoutY="448.0" onAction="#cmbConditionOnAction" prefWidth="150.0" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" />
+      <JFXTextField fx:id="txtQty" layoutX="297.0" layoutY="418.0" unFocusColor="WHITE" />
+      <Label fx:id="lblBooking" layoutX="1.0" layoutY="389.0" text="Booking  Date ">
+         <font>
+            <Font name="Serif Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDate" layoutX="98.0" layoutY="385.0" promptText="Booking Date " />
+      <Separator layoutX="1.0" layoutY="338.0" prefHeight="4.0" prefWidth="763.0" />
+      <ImageView fitHeight="128.0" fitWidth="237.0" layoutX="476.0" layoutY="387.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/anim-5-800.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="50.0" layoutX="464.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/17905086.gif" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnTrackRentalReport" buttonType="RAISED" layoutX="483.0" layoutY="155.0" onAction="#btnTrackRentalReportOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Track Rental Report">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="15.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

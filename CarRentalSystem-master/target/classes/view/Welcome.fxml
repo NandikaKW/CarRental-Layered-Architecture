@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancPageOne" prefHeight="615.0" prefWidth="595.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.carrentalsystem.controller.WelcomeController">
+   <children>
+      <ImageView fitHeight="338.0" fitWidth="490.0" layoutX="66.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/77236f94369913.5e7cfc87a518c.gif" />
+         </image>
+      </ImageView>
+      <Label layoutX="177.0" layoutY="423.0" prefHeight="46.0" prefWidth="258.0" style="-fx-background-color: white;" text="Wunder Rent" textFill="#0d0d0d">
+         <font>
+            <Font name="Serif Bold" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="188.0" layoutY="377.0" prefHeight="46.0" prefWidth="258.0" style="-fx-background-color: white;" text="Welcome To " textFill="#0d0d0d">
+         <font>
+            <Font name="Serif Bold" size="40.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnSIgnIn" buttonType="RAISED" layoutX="181.0" layoutY="487.0" onAction="#btnSIgnInOnAction" prefHeight="78.0" prefWidth="232.0" style="-fx-background-color: black;" text="Sign In " textFill="WHITE">
+         <font>
+            <Font name="Times New Roman Bold" size="37.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

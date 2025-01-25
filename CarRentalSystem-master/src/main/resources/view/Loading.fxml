@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.carrentalsystem.controller.LoadingController">
+   <children>
+      <ProgressBar layoutX="21.0" layoutY="345.0" prefHeight="36.0" prefWidth="562.0" />
+      <ImageView fitHeight="340.0" fitWidth="502.0" layoutX="129.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/36de7385046511.5d6fea2602f0c%20(1).gif" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
