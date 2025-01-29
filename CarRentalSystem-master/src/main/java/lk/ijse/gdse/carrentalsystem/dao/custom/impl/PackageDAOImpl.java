@@ -97,28 +97,6 @@ public class PackageDAOImpl implements PackageDAO {
     }
 
     @Override
-    public ArrayList<PaymentDto> getAllPayments() throws Exception {
-        ResultSet resultSet=CrudUtil.execute("SELECT * FROM payment");
-        ArrayList<PaymentDto> paymentDtos=new ArrayList<>();
-        while(resultSet.next()){
-            PaymentDto paymentDto=new PaymentDto(
-                    resultSet.getString("pay_id"),
-                    resultSet.getBigDecimal("amount"),
-                    resultSet.getDate("date"),
-                    resultSet.getString("invoice"),
-                    resultSet.getString("method"),
-                    resultSet.getString("transaction_reference"),
-                    resultSet.getBigDecimal("tax"),
-                    resultSet.getBigDecimal("discount_applied")
-            );
-            paymentDtos.add(paymentDto);
-
-
-        }
-        return paymentDtos;
-    }
-
-    @Override
     public ArrayList<String> getAllPackageIds() throws SQLException, ClassNotFoundException {
         // Execute SQL query to get all item IDs
         ResultSet rst = CrudUtil.execute("select package_id from package");
@@ -133,5 +111,17 @@ public class PackageDAOImpl implements PackageDAO {
 
         // Return the list of item IDs
         return packageIds;
+    }
+
+    @Override
+    public String loadCurrentPackageId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT package_id FROM package ORDER BY package_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            return resultSet.getString("package_id");  // Return the most recent package_id directly
+        }
+
+        return null;  // Return null if there are no records in the package table
+
     }
 }

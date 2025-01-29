@@ -6,6 +6,6 @@ import lk.ijse.gdse.carrentalsystem.entity.Damage;
 import java.sql.SQLException;
 
 public interface DamageDetailDAO extends CrudDAO<Damage> {
-    String loadCurrentRentId() throws SQLException, ClassNotFoundException;
-    String loadNextRentId() throws SQLException, ClassNotFoundException;
+
+
 }

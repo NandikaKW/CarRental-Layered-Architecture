@@ -2,6 +2,7 @@ package lk.ijse.gdse.carrentalsystem.dao.custom.impl;
 
 import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleDAO;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
+import lk.ijse.gdse.carrentalsystem.entity.VechileRentDetail;
 import lk.ijse.gdse.carrentalsystem.entity.Vehicle;
 import lk.ijse.gdse.carrentalsystem.util.CrudUtil;
 
@@ -79,38 +80,40 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     }
 
-    @Override
-    public String loadNextPackageId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet=CrudUtil.execute("SELECT package_id FROM package ORDER BY package_id DESC LIMIT 1");
-        if (resultSet.next()){
-            String lastID=resultSet.getString("package_id");
-            String substring=lastID.substring(1);
-            int id=Integer.parseInt(substring);
-            int newId=id+1;
-            return String.format("P%03d",newId);
 
 
-        }
-        return "P001";
-
-
+//    @Override
+//    public boolean reduceVehicleQuantity(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
+//        try {
+//            // Execute the update statement to reduce quantity by 1
+//            return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ?", vechileRentDetailDto.getVehicle_quantity(), vechileRentDetailDto.getVehicle_id());
+//        } catch (SQLException e) {
+//            System.err.println("Error while reducing vehicle quantity for vehicle_id: " + vechileRentDetailDto.getVehicle_id());
+//            e.printStackTrace();
+//            return false;
+//        } catch (ClassNotFoundException e) {
+//            System.err.println("Database driver not found.");
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+@Override
+public boolean reduceVehicleQuantity(VechileRentDetail vechileRentDetail) throws SQLException, ClassNotFoundException {
+    try {
+        // Execute the update statement to reduce quantity by 1
+        return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ?",
+                vechileRentDetail.getVehicle_quantity(), vechileRentDetail.getVehicle_id());
+    } catch (SQLException e) {
+        System.err.println("Error while reducing vehicle quantity for vehicle_id: " + vechileRentDetail.getVehicle_id());
+        e.printStackTrace();
+        return false;
+    } catch (ClassNotFoundException e) {
+        System.err.println("Database driver not found.");
+        e.printStackTrace();
+        return false;
     }
+}
 
-    @Override
-    public boolean reduceVehicleQuantity(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
-        try {
-            // Execute the update statement to reduce quantity by 1
-            return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ?", vechileRentDetailDto.getVehicle_quantity(), vechileRentDetailDto.getVehicle_id());
-        } catch (SQLException e) {
-            System.err.println("Error while reducing vehicle quantity for vehicle_id: " + vechileRentDetailDto.getVehicle_id());
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            System.err.println("Database driver not found.");
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     @Override
     public ArrayList<String> getAllVehicleIds() throws SQLException, ClassNotFoundException {
@@ -130,19 +133,33 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     }
 
+
+
     @Override
-    public String loadCurrentPackageId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT package_id FROM package ORDER BY package_id DESC LIMIT 1");
-
+    public String loadNextVehicleId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT vehicle_id FROM vehicle ORDER BY vehicle_id DESC LIMIT 1");
         if (resultSet.next()) {
-            return resultSet.getString("package_id");  // Return the most recent package_id directly
+            String lastID = resultSet.getString("vehicle_id");
+            String substring = lastID.substring(1);
+            int id = Integer.parseInt(substring);
+            int newId = id + 1;
+            return String.format("V%03d", newId);
         }
-
-        return null;  // Return null if there are no records in the package table
+        return "V001";
 
     }
 
+    @Override
+    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT vehicle_id FROM vehicle ORDER BY vehicle_id DESC LIMIT 1");
 
+        if (resultSet.next()) {
+            return resultSet.getString("vehicle_id");  // Return the most recent vehicle_id directly
+        }
+
+        return null;  // Return null if there are no records in the vehicle table
+
+    }
 
 
 }

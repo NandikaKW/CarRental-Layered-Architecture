@@ -13,9 +13,8 @@ public interface VehicleBO extends SuperBO {
     VehicleDto searchVehicle(String vehicleId) throws SQLException, ClassNotFoundException;
     ArrayList<VehicleDto> getAllVehicles() throws SQLException, ClassNotFoundException;
     String getNextVehicleId() throws SQLException, ClassNotFoundException;
-    String loadNextPackageId() throws SQLException, ClassNotFoundException;
     boolean reduceVehicleQuantity(VehicleDto vehicleDto) throws SQLException, ClassNotFoundException;
     ArrayList<String> getAllVehicleIds() throws SQLException, ClassNotFoundException;
-    String loadCurrentPackageId() throws SQLException, ClassNotFoundException;
-
+    String loadNextVehicleId() throws SQLException, ClassNotFoundException;
+    String loadCurrentVehicleId() throws SQLException, ClassNotFoundException;
 }

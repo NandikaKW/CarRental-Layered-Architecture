@@ -20,6 +20,11 @@ public class VehicleDto {
         this.package_id = package_id;
     }
 
+    public VehicleDto(String vehicleId, int vehicleQuantity) {
+        this.vehicle_id = vehicleId;
+        this.quantity = vehicleQuantity;
+    }
+
     public String getVehicle_id() {
         return vehicle_id;
     }

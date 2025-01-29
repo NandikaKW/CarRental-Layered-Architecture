@@ -4,7 +4,9 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.PaymentBO;
 import lk.ijse.gdse.carrentalsystem.dao.DAOFactory;
 import lk.ijse.gdse.carrentalsystem.dao.custom.PackageDAO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.PaymentDAO;
+import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.PaymentDto;
+import lk.ijse.gdse.carrentalsystem.entity.CustomerPayment;
 import lk.ijse.gdse.carrentalsystem.entity.Payment;
 
 import java.math.BigDecimal;
@@ -95,4 +97,36 @@ public class PaymentBOImpl implements PaymentBO {
     public BigDecimal getAvailablePaymentAmount(String paymentId) throws SQLException, ClassNotFoundException {
         return paymentDAO.getAvailablePaymentAmount(paymentId);
     }
+    @Override
+    public String getCurrentPaymentId() throws SQLException, ClassNotFoundException {
+        return paymentDAO.loadCurrentPaymentId();
+    }
+
+    @Override
+    public ArrayList<String> getAllPaymentIds() {
+        try {
+            return paymentDAO.getAllPaymentIDs();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
+      //  return paymentDAO.reducePaymentAmount(customerPaymentDto);
+        // Convert DTO to Entity
+        CustomerPayment customerPayment = new CustomerPayment(
+                customerPaymentDto.getCust_id(),
+                customerPaymentDto.getPay_id(),
+                customerPaymentDto.getPayment_date(),
+                customerPaymentDto.getAmount()
+        );
+
+        // Pass the entity to the DAO layer
+        return paymentDAO.reducePaymentAmount(customerPayment);
+
+    }
+
+
 }

@@ -60,27 +60,7 @@ public class RentPayemntDAOImpl implements RentPayemntDAO {
         return "";
     }
 
-    @Override
-    public String loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT rent_id FROM rent ORDER BY rent_id DESC LIMIT 1");
 
-        if (resultSet.next()) {
-            return resultSet.getString("rent_id");  // Return the most recent rent ID directly
-        }
-        return null;
-    }
-
-    @Override
-    public String loadCurrentPaymentId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT pay_id FROM payment ORDER BY pay_id DESC LIMIT 1");
-
-        if (resultSet.next()) {
-            return resultSet.getString("pay_id");
-        }
-
-        return null;
-
-    }
 
     @Override
     public RentPayemntDto searchRentPayment(String rentId, String paymentId) throws SQLException, ClassNotFoundException {

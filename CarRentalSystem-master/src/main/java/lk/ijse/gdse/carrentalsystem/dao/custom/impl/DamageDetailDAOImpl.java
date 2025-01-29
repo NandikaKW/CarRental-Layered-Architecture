@@ -81,29 +81,4 @@ public class DamageDetailDAOImpl implements DamageDetailDAO {
 
     }
 
-
-    @Override
-    public String loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT rent_id FROM rent ORDER BY rent_id DESC LIMIT 1");
-
-        if (resultSet.next()) {
-            return resultSet.getString("rent_id");  // Return the most recent rent_id directly
-        }
-
-        return null;
-    }
-
-    @Override
-    public String loadNextRentId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet=CrudUtil.execute("SELECT rent_id FROM rent ORDER BY rent_id DESC LIMIT 1");
-        if (resultSet.next()){
-            String lastID=resultSet.getString("rent_id");
-            String substring=lastID.substring(1);
-            int id=Integer.parseInt(substring);
-            int newId=id+1;
-            return String.format("R%03d",newId);
-        }
-        return "R001";
-
-    }
 }

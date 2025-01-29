@@ -2,6 +2,7 @@ package lk.ijse.gdse.carrentalsystem.bo.custom.impl;
 
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleRentDetailBO;
 import lk.ijse.gdse.carrentalsystem.dao.DAOFactory;
+import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleDAO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleRentDetailDAO;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
 import lk.ijse.gdse.carrentalsystem.entity.VechileRentDetail;
@@ -11,14 +12,37 @@ import java.util.ArrayList;
 
 public class VehicleRentDetailBOImpl implements VehicleRentDetailBO {
     VehicleRentDetailDAO vehicleRentDetailDAO= (VehicleRentDetailDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.VEHICLE_RENT);
+    VehicleDAO vehicleDAO= (VehicleDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.VEHICLE);
     @Override
     public boolean saveVehicleRentList(ArrayList<VechileRentDetailDto> vechileRentDetailDtos) throws SQLException, ClassNotFoundException {
 
+//        try {
+//            return vehicleRentDetailDAO.saveVehicleRentList(vechileRentDetailDtos);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+        // Convert DTOs to entities
+        ArrayList<VechileRentDetail> vechileRentDetails = new ArrayList<>();
+        for (VechileRentDetailDto dto : vechileRentDetailDtos) {
+            VechileRentDetail vechileRentDetail = new VechileRentDetail(
+                    dto.getVehicle_id(),
+                    dto.getRent_id(),
+                    dto.getStart_date(),
+                    dto.getEnd_date(),
+                    dto.getVehicle_quantity(),
+                    dto.getVehicle_condition()
+            );
+            vechileRentDetails.add(vechileRentDetail);
+        }
+
+        // Now pass the list of entities to the DAO
         try {
-            return vehicleRentDetailDAO.saveVehicleRentList(vechileRentDetailDtos);
+           return vehicleRentDetailDAO.saveVehicleRentList(vechileRentDetails);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -67,14 +91,6 @@ public class VehicleRentDetailBOImpl implements VehicleRentDetailBO {
     public String getNextRentId() throws SQLException, ClassNotFoundException {
 
         return vehicleRentDetailDAO.getNextId();
-    }
-    @Override
-    public String loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        return vehicleRentDetailDAO.loadCurrentRentId();
-    }
-    @Override
-    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        return vehicleRentDetailDAO.loadCurrentVehicleId();
     }
 
 

@@ -12,7 +12,7 @@ public class DAOFactory {
         return daoFactory==null?daoFactory=new DAOFactory():daoFactory;
     }
     public enum DAOTypes{
-        ADMIN,EMPLOYEE,PACKAGE,DAMAGE_DETAIL,MAINTAINANCE,QUERY,AGREEMENT,VEHICLE,VEHICLE_RENT,PAYMENT,RENT_PAYMENT;
+        ADMIN,EMPLOYEE,PACKAGE,DAMAGE_DETAIL,MAINTAINANCE,QUERY,AGREEMENT,VEHICLE,VEHICLE_RENT,PAYMENT,RENT_PAYMENT,RENT,CUSTOMER,CUSTOMER_PAYMENT;
     }
     public SuperDAO getDAO(DAOTypes type) {
         switch (type) {
@@ -36,7 +36,13 @@ public class DAOFactory {
                 return new PaymentDAOImpl();
             case RENT_PAYMENT:
                 return new RentPayemntDAOImpl();
-            default:
+            case RENT:
+                return new RentDAOImpl();
+            case CUSTOMER:
+                return new CustomerDAOImpl();
+            case CUSTOMER_PAYMENT:
+                return new CustomerPaymentDAOImpl();
+                default:
                 return null;
         }
     }

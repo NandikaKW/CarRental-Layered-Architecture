@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.AdminBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.RentBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleRentDetailBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
@@ -144,6 +145,7 @@ public class VehicleRentDetailsController  implements Initializable {
 
     VehicleRentDetailBO vehicleRentDetailBO= (VehicleRentDetailBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE_RENT);
     VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
+    RentBO rentBO= (RentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT);
     @FXML
     public void initialize() {
         ComboYear.setItems(FXCollections.observableArrayList(
@@ -514,12 +516,12 @@ public class VehicleRentDetailsController  implements Initializable {
 
     }
     public void loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        String currentVehicleId = vehicleRentDetailBO.loadCurrentVehicleId();
+        String currentVehicleId = vehicleBO.loadCurrentVehicleId();
         txtVehicleID.setText(currentVehicleId);
     }
 
     public void loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        String currentRentId = vehicleRentDetailBO.loadCurrentRentId();
+        String currentRentId =rentBO.loadCurrentRentId();
         txtRentId.setText(currentRentId);
     }
 

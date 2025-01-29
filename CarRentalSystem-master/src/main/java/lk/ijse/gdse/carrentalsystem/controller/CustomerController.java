@@ -16,8 +16,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import lk.ijse.gdse.carrentalsystem.bo.custom.AdminBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.*;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
+import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerDto;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.SubmitTM;
@@ -29,10 +30,13 @@ import lk.ijse.gdse.carrentalsystem.model.RentModel;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
+
 
 public class CustomerController implements Initializable {
 
@@ -85,7 +89,7 @@ public class CustomerController implements Initializable {
     }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<CustomerDto> customerDTOS = customerModel.getAllCustomers();
+        ArrayList<CustomerDto> customerDTOS = customerBO.getAll();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
         for (CustomerDto customerDTO : customerDTOS) {
             CustomerTM customerTM = new CustomerTM(
@@ -218,6 +222,10 @@ public class CustomerController implements Initializable {
     private TextField txtNIC;
     private final ObservableList<SubmitTM> submitTMS = FXCollections.observableArrayList();
     AdminBO adminBO= (AdminBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ADMIN);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER);
+    PaymentBO paymentBO= (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT);
+    RentBO rentBO = (RentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT);
+    CustomerPaymentBO customerPaymentBO = (CustomerPaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.CUSTOMER_PAYMENT);
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -236,7 +244,7 @@ public class CustomerController implements Initializable {
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
             try {
                 // Attempt to delete the customer
-                boolean isDeleted = customerModel.deleteCustomer(customerId);
+                boolean isDeleted = customerBO.delete(customerId);
 
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully!").show();
@@ -294,90 +302,196 @@ public class CustomerController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String customerId = txtCustomerID.getText();
-        String customerName = txtCustomerName.getText();
-        String address = txtAdress.getText();
-        String email = txtCustomerNumber.getText();
-        String nic = txtNIC.getText();
-        String adminId = txtAdminID.getText();
+//        String customerId = txtCustomerID.getText();
+//        String customerName = txtCustomerName.getText();
+//        String address = txtAdress.getText();
+//        String email = txtCustomerNumber.getText();
+//        String nic = txtNIC.getText();
+//        String adminId = txtAdminID.getText();
+//
+//        // Regex patterns
+//        String customerIdPattern = "^C\\d{3}$"; // Matches C001, C002, etc.
+//        String customerNamePattern = "^[A-Za-z ]+$"; // Allows letters and spaces only
+//        String addressPattern = "^[\\w\\s,.#-]+$"; // Allows letters, numbers, spaces, and common punctuation
+//        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"; // Valid email format
+//        String nicPattern = "^[0-9]{9}[Vv]$|^[0-9]{12}$"; // Matches NIC format with 9 digits + V or 12 digits
+//        String adminIdPattern = "^A\\d{3}$"; // Matches A001, A002, etc.
+//
+//
+//        resetFieldStyles();
+//
+//        // Validation checks
+//        boolean isValidCustomerId = customerId.matches(customerIdPattern);
+//        boolean isValidCustomerName = customerName.matches(customerNamePattern);
+//        boolean isValidAddress = address.matches(addressPattern);
+//        boolean isValidEmail = email.matches(emailPattern);
+//        boolean isValidNic = nic.matches(nicPattern);
+//        boolean isValidAdminId = adminId.matches(adminIdPattern);
+//
+//
+//        if (!isValidCustomerId) {
+//            txtCustomerID.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid Customer ID format!").show();
+//        }
+//
+//        if (!isValidCustomerName) {
+//            txtCustomerName.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid Customer Name format!").show();
+//        }
+//
+//        if (!isValidAddress) {
+//            txtAdress.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid Address format!").show();
+//        }
+//
+//        if (!isValidEmail) {
+//            txtCustomerNumber.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid Email format!").show();
+//        }
+//
+//        if (!isValidNic) {
+//            txtNIC.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid NIC format!").show();
+//        }
+//
+//        if (!isValidAdminId) {
+//            txtAdminID.setStyle("-fx-border-color: red;");
+//            new Alert(Alert.AlertType.WARNING, "Invalid Admin ID format!").show();
+//        }
+//
+//        // If all fields are valid, proceed to save
+//        if (isValidCustomerId && isValidCustomerName && isValidAddress && isValidEmail && isValidNic && isValidAdminId) {
+//            CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
+//
+//            try {
+//                boolean isSaved = customerBO.save(dto);
+//
+//                if (isSaved) {
+//                    new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+//                    refreshPage();
+//                    loadNextCustomerId();
+//                    loadCurrentAdminId();
+//                } else {
+//                    new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                new Alert(Alert.AlertType.ERROR, "Database error occurred: " + e.getMessage()).show();
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//                new Alert(Alert.AlertType.ERROR, "Required class not found: " + e.getMessage()).show();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                new Alert(Alert.AlertType.ERROR, "Unexpected error: " + e.getMessage()).show();
+//            }
+//        }
+        try {
+            // Check if the table has payment details
+//            if (tblSubmit.getItems().isEmpty()) {
+//                new Alert(Alert.AlertType.ERROR, "Please add payment details.").show();
+//                return;
+//            }
+//
+//            // Check if a payment ID is selected
+//            if (cmbPayemntId.getSelectionModel().isEmpty()) {
+//                new Alert(Alert.AlertType.ERROR, "Please select a payment ID.").show();
+//                return;
+//            }
 
-        // Regex patterns
-        String customerIdPattern = "^C\\d{3}$"; // Matches C001, C002, etc.
-        String customerNamePattern = "^[A-Za-z ]+$"; // Allows letters and spaces only
-        String addressPattern = "^[\\w\\s,.#-]+$"; // Allows letters, numbers, spaces, and common punctuation
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"; // Valid email format
-        String nicPattern = "^[0-9]{9}[Vv]$|^[0-9]{12}$"; // Matches NIC format with 9 digits + V or 12 digits
-        String adminIdPattern = "^A\\d{3}$"; // Matches A001, A002, etc.
+            // Calculate the total payment amount from the table
+//            BigDecimal totalPaymentAmount = BigDecimal.ZERO;
+//            for (SubmitTM submitTM : tblSubmit.getItems()) {
+//                totalPaymentAmount = totalPaymentAmount.add(submitTM.getAmount());
+//            }
+//
+//            // Parse the required payment amount
+//            BigDecimal requiredPaymentAmount;
+//            try {
+//                requiredPaymentAmount = new BigDecimal(txtPaymentAmount.getText());
+//            } catch (NumberFormatException e) {
+//                new Alert(Alert.AlertType.ERROR, "Invalid payment amount entered.").show();
+//                return;
+//            }
+//
+//            // Validate the total payment amount against the required amount
+//            if (totalPaymentAmount.compareTo(requiredPaymentAmount) > 0) {
+//                new Alert(Alert.AlertType.ERROR, "Total payment amount exceeds the required payment amount.").show();
+//                return;
+//            } else if (totalPaymentAmount.compareTo(requiredPaymentAmount) < 0) {
+//                new Alert(Alert.AlertType.ERROR, "Total payment amount is less than the required payment amount.").show();
+//                return;
+//            }
+//
+//            // Load the next customer ID
+//            String customerId = customerBO.getNextId();
+//            txtCustomerID.setText(customerId);
+//
+//            // Prepare payment details
+//            ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//            // Parse payment date
+//            Date date;
+//            try {
+//                date = dateFormat.parse(txtPaymentDate.getText());
+//            } catch (ParseException e) {
+//                new Alert(Alert.AlertType.ERROR, "Invalid date format. Please use 'yyyy-MM-dd'.").show();
+//                return;
+//            }
+//
+//            // Populate payment DTOs from the table
+//            for (SubmitTM submitTM : tblSubmit.getItems()) {
+//                CustomerPaymentDto customerPaymentDto = new CustomerPaymentDto(
+//                        submitTM.getCustId(),
+//                        submitTM.getPaymentId(),
+//                        date,
+//                        submitTM.getAmount()
+//                );
+//                customerPaymentDtos.add(customerPaymentDto);
+//            }
 
+            // Prepare customer DTO
+            CustomerDto customerDto = new CustomerDto(
+                    txtCustomerID.getText(),
+                    txtCustomerName.getText(),
+                    txtAdress.getText(),
+                    txtCustomerNumber.getText(),
+                    txtNIC.getText(),
+                    txtAdminID.getText()
+            );
+//            customerDto.setCustomerPaymentDtos(customerPaymentDtos);
 
-        resetFieldStyles();
+            // Save customer and handle the result
+            boolean isSaved = customerBO.save(customerDto);
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Customer saved successfully.").show();
 
-        // Validation checks
-        boolean isValidCustomerId = customerId.matches(customerIdPattern);
-        boolean isValidCustomerName = customerName.matches(customerNamePattern);
-        boolean isValidAddress = address.matches(addressPattern);
-        boolean isValidEmail = email.matches(emailPattern);
-        boolean isValidNic = nic.matches(nicPattern);
-        boolean isValidAdminId = adminId.matches(adminIdPattern);
+                CustomerTM customerTM = new CustomerTM(
+                        customerDto.getCust_id(),
+                        customerDto.getCust_name(),
+                        customerDto.getAddress(),
+                        customerDto.getEmail(),
+                        customerDto.getNic(),
+                        customerDto.getAdmin_id()
+                );
+                tblCustomer.getItems().add(customerTM);
 
-
-        if (!isValidCustomerId) {
-            txtCustomerID.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid Customer ID format!").show();
-        }
-
-        if (!isValidCustomerName) {
-            txtCustomerName.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid Customer Name format!").show();
-        }
-
-        if (!isValidAddress) {
-            txtAdress.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid Address format!").show();
-        }
-
-        if (!isValidEmail) {
-            txtCustomerNumber.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid Email format!").show();
-        }
-
-        if (!isValidNic) {
-            txtNIC.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid NIC format!").show();
-        }
-
-        if (!isValidAdminId) {
-            txtAdminID.setStyle("-fx-border-color: red;");
-            new Alert(Alert.AlertType.WARNING, "Invalid Admin ID format!").show();
-        }
-
-        // If all fields are valid, proceed to save
-        if (isValidCustomerId && isValidCustomerName && isValidAddress && isValidEmail && isValidNic && isValidAdminId) {
-            CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
-
-            try {
-                boolean isSaved = customerModel.saveCustomer(dto);
-
-                if (isSaved) {
-                    new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
-                    refreshPage();
-                    loadNextCustomerId();
-                    loadCurrentAdminId();
-                } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Database error occurred: " + e.getMessage()).show();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Required class not found: " + e.getMessage()).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Unexpected error: " + e.getMessage()).show();
+                clearFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save customer.").show();
             }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Database error: " + e.getMessage()).show();
+            e.printStackTrace();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
+            e.printStackTrace();
         }
+
     }
+
+
 
     private void resetFieldStyles() {
         txtCustomerID.setStyle("");
@@ -400,7 +514,7 @@ public class CustomerController implements Initializable {
 
         try {
 
-            CustomerDto customer = customerModel.searchCustomer(customerId);
+            CustomerDto customer = customerBO.search(customerId);
 
             // If customer is found, populate fields
             if (customer != null) {
@@ -490,7 +604,7 @@ public class CustomerController implements Initializable {
         if (isValidCustomerId && isValidCustomerName && isValidAddress && isValidEmail && isValidNic && isValidAdminId) {
             try {
                 CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
-                boolean isUpdated = customerModel.updateCustomer(dto);
+                boolean isUpdated = customerBO.update(dto);
 
                 if (isUpdated) {
                     new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
@@ -534,7 +648,7 @@ public class CustomerController implements Initializable {
     }
 
     public void loadNextCustomerId() throws SQLException, ClassNotFoundException {
-        String nextCustomerId = customerModel.loadNextCustomerId();
+        String nextCustomerId = customerBO.getNextId();
         txtCustomerID.setText(nextCustomerId);
     }
 
@@ -547,7 +661,7 @@ public class CustomerController implements Initializable {
 
 
     private void refreshTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<CustomerDto> customerDtos = customerModel.getAllCustomer();
+        ArrayList<CustomerDto> customerDtos = customerBO.getAll();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
         for (CustomerDto dto : customerDtos) {
             customerTMS.add(new CustomerTM(
@@ -600,13 +714,13 @@ public class CustomerController implements Initializable {
         }
     }
     public  void loadAllPaymentIds() throws SQLException, ClassNotFoundException {
-        ArrayList<String> PaymentIds = PaymentModel.getAllPaymentIDs();
+        ArrayList<String> PaymentIds = paymentBO.getAllPaymentIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(PaymentIds);
         cmbPayemntId.setItems(observableList);
     }
     public  void loadAllRentIds() throws SQLException, ClassNotFoundException {
-        ArrayList<String> RentIds = RentModel.getAllRentIds();
+        ArrayList<String> RentIds = rentBO.getAllRentIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(RentIds);
         cmbRentID.setItems(observableList);
@@ -633,109 +747,182 @@ public class CustomerController implements Initializable {
     }
     @FXML
     void btnSubmitPaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, ParseException {
+
+
+//        try {
+//            // Check if the table has payment details
+//            if (tblSubmit.getItems().isEmpty()) {
+//                new Alert(Alert.AlertType.ERROR, "Please add payment details.").show();
+//                return;
+//            }
+//
+//            // Check if a payment ID is selected
+//            if (cmbPayemntId.getSelectionModel().isEmpty()) {
+//                new Alert(Alert.AlertType.ERROR, "Please select a payment ID.").show();
+//                return;
+//            }
+//
+//            // Calculate the total payment amount from the table
+//            BigDecimal totalPaymentAmount = BigDecimal.ZERO;
+//            for (SubmitTM submitTM : tblSubmit.getItems()) {
+//                totalPaymentAmount = totalPaymentAmount.add(submitTM.getAmount());
+//            }
+//
+//            // Parse the required payment amount
+//            BigDecimal requiredPaymentAmount;
+//            try {
+//                requiredPaymentAmount = new BigDecimal(txtPaymentAmount.getText());
+//            } catch (NumberFormatException e) {
+//                new Alert(Alert.AlertType.ERROR, "Invalid payment amount entered.").show();
+//                return;
+//            }
+//
+//            // Validate the total payment amount against the required amount
+//            if (totalPaymentAmount.compareTo(requiredPaymentAmount) > 0) {
+//                new Alert(Alert.AlertType.ERROR, "Total payment amount exceeds the required payment amount.").show();
+//                return;
+//            } else if (totalPaymentAmount.compareTo(requiredPaymentAmount) < 0) {
+//                new Alert(Alert.AlertType.ERROR, "Total payment amount is less than the required payment amount.").show();
+//                return;
+//            }
+//
+//            // Load the next customer ID
+//            String customerId = customerBO.getNextId();
+//            txtCustomerID.setText(customerId);
+//
+//            // Prepare payment details
+//            ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//            // Parse payment date
+//            Date date;
+//            try {
+//                date = dateFormat.parse(txtPaymentDate.getText());
+//            } catch (ParseException e) {
+//                new Alert(Alert.AlertType.ERROR, "Invalid date format. Please use 'yyyy-MM-dd'.").show();
+//                return;
+//            }
+//
+//            // Populate payment DTOs from the table
+//            for (SubmitTM submitTM : tblSubmit.getItems()) {
+//                CustomerPaymentDto customerPaymentDto = new CustomerPaymentDto(
+//                        submitTM.getCustId(),
+//                        submitTM.getPaymentId(),
+//                        date,
+//                        submitTM.getAmount()
+//                );
+//                customerPaymentDtos.add(customerPaymentDto);
+//            }
+//
+//            // Prepare customer DTO
+//            CustomerDto customerDto = new CustomerDto(
+//                    txtCustomerID.getText(),
+//                    txtCustomerName.getText(),
+//                    txtAdress.getText(),
+//                    txtCustomerNumber.getText(),
+//                    txtNIC.getText(),
+//                    txtAdminID.getText()
+//            );
+//            customerDto.setCustomerPaymentDtos(customerPaymentDtos);
+//
+//            // Save customer and handle the result
+//            boolean isSaved = customerBO.save(customerDto);
+//            if (isSaved) {
+//                new Alert(Alert.AlertType.CONFIRMATION, "Customer saved successfully.").show();
+//
+//                CustomerTM customerTM = new CustomerTM(
+//                        customerDto.getCust_id(),
+//                        customerDto.getCust_name(),
+//                        customerDto.getAddress(),
+//                        customerDto.getEmail(),
+//                        customerDto.getNic(),
+//                        customerDto.getAdmin_id()
+//                );
+//                tblCustomer.getItems().add(customerTM);
+//
+//                clearFields();
+//            } else {
+//                new Alert(Alert.AlertType.ERROR, "Failed to save customer.").show();
+//            }
+//
+//        } catch (SQLException | ClassNotFoundException e) {
+//            new Alert(Alert.AlertType.ERROR, "Database error: " + e.getMessage()).show();
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
+//            e.printStackTrace();
+//        }
+        Connection connection = null;
         try {
-            // Check if the table has payment details
-            if (tblSubmit.getItems().isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Please add payment details.").show();
-                return;
-            }
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
+            String customerId = txtCustomerID.getText();
+            String customerName = txtCustomerName.getText();
+            String address = txtAdress.getText();
+            String email = txtCustomerNumber.getText();
+            String nic = txtNIC.getText();
+            String adminId = txtAdminID.getText();
+            CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
 
-            // Check if a payment ID is selected
-            if (cmbPayemntId.getSelectionModel().isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Please select a payment ID.").show();
-                return;
-            }
 
-            // Calculate the total payment amount from the table
-            BigDecimal totalPaymentAmount = BigDecimal.ZERO;
-            for (SubmitTM submitTM : tblSubmit.getItems()) {
-                totalPaymentAmount = totalPaymentAmount.add(submitTM.getAmount());
-            }
+            boolean isCustomerSaved = customerBO.save(dto);
 
-            // Parse the required payment amount
-            BigDecimal requiredPaymentAmount;
-            try {
-                requiredPaymentAmount = new BigDecimal(txtPaymentAmount.getText());
-            } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR, "Invalid payment amount entered.").show();
-                return;
-            }
 
-            // Validate the total payment amount against the required amount
-            if (totalPaymentAmount.compareTo(requiredPaymentAmount) > 0) {
-                new Alert(Alert.AlertType.ERROR, "Total payment amount exceeds the required payment amount.").show();
-                return;
-            } else if (totalPaymentAmount.compareTo(requiredPaymentAmount) < 0) {
-                new Alert(Alert.AlertType.ERROR, "Total payment amount is less than the required payment amount.").show();
-                return;
-            }
+            if (isCustomerSaved) {
+                ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
+                customerPaymentDtos.add(new CustomerPaymentDto(
+                        customerId,
+                        cmbPayemntId.getValue(),
+                        new java.sql.Date(java.sql.Date.valueOf(txtPaymentDate.getText()).getTime()),
+                        new BigDecimal(txtPaymentAmount.getText())
+                ));
+                boolean isCustomerPaymentSaved = customerPaymentBO.saveCustomerPaymentList(customerPaymentDtos);
 
-            // Load the next customer ID
-            String customerId = CustomerModel.loadNextCustomerId();
-            txtCustomerID.setText(customerId);
+                if (isCustomerPaymentSaved) {
+                    boolean isReducedPayment = paymentBO.reducePaymentAmount(customerPaymentDtos.get(0));
+                    if (isReducedPayment) {
+                        connection.commit();
+                        new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+                        refreshPage();
+                        loadNextCustomerId();
+                        loadCurrentAdminId();
 
-            // Prepare payment details
-            ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    }else {
+                        connection.rollback();
+                        new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+                    }
 
-            // Parse payment date
-            Date date;
-            try {
-                date = dateFormat.parse(txtPaymentDate.getText());
-            } catch (ParseException e) {
-                new Alert(Alert.AlertType.ERROR, "Invalid date format. Please use 'yyyy-MM-dd'.").show();
-                return;
-            }
-
-            // Populate payment DTOs from the table
-            for (SubmitTM submitTM : tblSubmit.getItems()) {
-                CustomerPaymentDto customerPaymentDto = new CustomerPaymentDto(
-                        submitTM.getCustId(),
-                        submitTM.getPaymentId(),
-                        date,
-                        submitTM.getAmount()
-                );
-                customerPaymentDtos.add(customerPaymentDto);
-            }
-
-            // Prepare customer DTO
-            CustomerDto customerDto = new CustomerDto(
-                    txtCustomerID.getText(),
-                    txtCustomerName.getText(),
-                    txtAdress.getText(),
-                    txtCustomerNumber.getText(),
-                    txtNIC.getText(),
-                    txtAdminID.getText()
-            );
-            customerDto.setCustomerPaymentDtos(customerPaymentDtos);
-
-            // Save customer and handle the result
-            boolean isSaved = CustomerModel.saveCustomer(customerDto);
-
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Customer saved successfully.").show();
-
-                CustomerTM customerTM = new CustomerTM(
-                        customerDto.getCust_id(),
-                        customerDto.getCust_name(),
-                        customerDto.getAddress(),
-                        customerDto.getEmail(),
-                        customerDto.getNic(),
-                        customerDto.getAdmin_id()
-                );
-                tblCustomer.getItems().add(customerTM);
-
-                clearFields();
+                } else {
+                    connection.rollback();
+                    new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+                }
             } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save customer.").show();
+                connection.rollback();
+                new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
-            new Alert(Alert.AlertType.ERROR, "Database error: " + e.getMessage()).show();
+
+        } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
-            e.printStackTrace();
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+
+            }
+            new Alert(Alert.AlertType.ERROR, "Database error occurred: " + e.getMessage()).show();
+
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -773,7 +960,7 @@ public class CustomerController implements Initializable {
         // Check the available amount for the selected payment ID
         BigDecimal availableAmount;
         try {
-            availableAmount = PaymentModel.getAvailablePaymentAmount(paymentId);
+            availableAmount = paymentBO.getAvailablePaymentAmount(paymentId);
             if (payAmount.compareTo(availableAmount) > 0) {
                 new Alert(Alert.AlertType.ERROR, "The payment amount exceeds the available amount for this payment ID.").show();
                 return;
@@ -816,6 +1003,7 @@ public class CustomerController implements Initializable {
         tblSubmit.setItems(submitTMS);
         tblSubmit.refresh();
     }
+
 
 
 

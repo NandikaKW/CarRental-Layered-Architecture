@@ -3,6 +3,7 @@ package lk.ijse.gdse.carrentalsystem.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+
 public class PaymentDto {
     private  String pay_id;
     private BigDecimal amount;

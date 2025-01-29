@@ -70,13 +70,5 @@ public class RentPaymentBOImpl implements RentPaymentBO {
         return dtos;
     }
 
-    @Override
-    public String getCurrentRentId() throws SQLException, ClassNotFoundException {
-        return rentPayemntDAO.loadCurrentRentId();
-    }
 
-    @Override
-    public String getCurrentPaymentId() throws SQLException, ClassNotFoundException {
-        return rentPayemntDAO.loadCurrentPaymentId();
-    }
 }

@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.DamageDetailBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.RentBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.DamageDto;
 import lk.ijse.gdse.carrentalsystem.model.DamageModel;
@@ -84,6 +85,7 @@ public class DamageDetailsController implements Initializable {
     @FXML
     private TextField txtRepairCost;
     DamageDetailBO damageDetailBO= (DamageDetailBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.DAMAGE_DETAIL);
+    RentBO rentBO = (RentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT);
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -426,7 +428,7 @@ public class DamageDetailsController implements Initializable {
 
 
     public void loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        String currentRentId = damageDetailBO.loadCurrentRentId();
+        String currentRentId = rentBO.loadCurrentRentId();
         txtRentId.setText(currentRentId);
     }
 

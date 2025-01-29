@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.AdminBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.PackageBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.VehicleDto;
@@ -106,6 +107,7 @@ public class VehicleDetailsController  implements Initializable {
     private TextField txtQuantity;
 
     VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
+    PackageBO packageBO= (PackageBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PACKAGE);
 
     @FXML
     private TextField txtVehicleId;
@@ -520,7 +522,7 @@ public class VehicleDetailsController  implements Initializable {
         txtVehicleId.setText(nextVehicleId);
     }
     public void loadCurrentPackageId() throws SQLException, ClassNotFoundException {
-        String currentPackageId = vehicleBO.loadCurrentPackageId();
+        String currentPackageId = packageBO.loadCurrentPackageId();
         txtPackageId.setText(currentPackageId);
     }
     @FXML

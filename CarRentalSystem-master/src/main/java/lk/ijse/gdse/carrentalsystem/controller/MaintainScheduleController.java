@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.AdminBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.MaintainBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleBO;
 import lk.ijse.gdse.carrentalsystem.dto.MaintainDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.MaintainTM;
 import lk.ijse.gdse.carrentalsystem.model.MaintinModel;
@@ -109,7 +110,7 @@ public class MaintainScheduleController  implements Initializable {
 
     @FXML
     private TextField txtVehicleID;
-    AdminBO adminBO= (AdminBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ADMIN);
+    VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
     MaintainBO maintainBO= (MaintainBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.MAINTAINANCE);
 
     @FXML
@@ -571,7 +572,7 @@ public class MaintainScheduleController  implements Initializable {
         txtMaintainID.setText(nextId);
     }
     public void loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        String currentVehicleId = maintainBO.loadCurrentVehicleId();
+        String currentVehicleId =vehicleBO.loadCurrentVehicleId();
         txtVehicleID.setText(currentVehicleId);
     }
 

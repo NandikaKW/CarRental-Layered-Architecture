@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface PackageDAO extends CrudDAO<Package> {
-    ArrayList<PaymentDto> getAllPayments() throws Exception;
     ArrayList<String> getAllPackageIds() throws SQLException, ClassNotFoundException;
-
+    String loadCurrentPackageId() throws SQLException, ClassNotFoundException;
 }

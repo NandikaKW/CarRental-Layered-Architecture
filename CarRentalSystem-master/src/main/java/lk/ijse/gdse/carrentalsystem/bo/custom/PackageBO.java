@@ -1,6 +1,7 @@
 package lk.ijse.gdse.carrentalsystem.bo.custom;
 
 import lk.ijse.gdse.carrentalsystem.bo.SuperBO;
+import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.PackageDto;
 
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ public interface PackageBO extends SuperBO {
     ArrayList<PackageDto> getAll() throws SQLException;
     String getNextId() throws SQLException;
     ArrayList<String> getIds() throws SQLException;
+    String loadCurrentPackageId() throws SQLException, ClassNotFoundException;
 
 
 }

@@ -106,13 +106,5 @@ public class MaintainBOImpl implements MaintainBO {
         }
     }
 
-    @Override
-    public String loadNextVehicleId() throws SQLException, ClassNotFoundException {
-        return maintainDAO.loadNextVehicleId();
-    }
 
-    @Override
-    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        return maintainDAO.loadCurrentVehicleId();
-    }
 }

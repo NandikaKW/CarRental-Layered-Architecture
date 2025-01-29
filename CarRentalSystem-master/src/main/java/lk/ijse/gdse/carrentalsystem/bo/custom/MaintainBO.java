@@ -13,7 +13,5 @@ public interface MaintainBO extends SuperBO {
     MaintainDto searchMaintain(String id) throws SQLException;
     List<MaintainDto> getAllMaintains() throws SQLException;
     String getNextMaintainId() throws SQLException;
-    String loadNextVehicleId() throws SQLException, ClassNotFoundException;
-    String loadCurrentVehicleId() throws SQLException, ClassNotFoundException;
 
 }

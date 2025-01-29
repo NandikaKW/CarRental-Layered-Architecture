@@ -22,7 +22,7 @@
             <Image url="@../image/10826774.gif" />
          </image>
       </ImageView>
-      <Label fx:id="lblVehicleId" layoutX="14.0" layoutY="71.0" text="Vehicle ID">
+      <Label fx:id="lblVehicleId" layoutX="3.0" layoutY="71.0" text="Vehicle ID">
          <font>
             <Font name="Serif Bold Italic" size="20.0" />
          </font>
@@ -47,7 +47,7 @@
             <Font name="Serif Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblCategory" layoutX="539.0" layoutY="128.0" text="Category">
+      <Label fx:id="lblCategory" layoutX="547.0" layoutY="128.0" text="Category">
          <font>
             <Font name="Serif Bold Italic" size="20.0" />
          </font>
@@ -55,9 +55,9 @@
       <TextField fx:id="txtVehicleId" layoutX="141.0" layoutY="68.0" prefHeight="33.0" prefWidth="180.0" promptText="Vehicle ID" />
       <TextField fx:id="txtQuantity" layoutX="141.0" layoutY="125.0" promptText="Vehicle Amount" />
       <TextField fx:id="txtModel" layoutX="385.0" layoutY="67.0" prefHeight="34.0" prefWidth="158.0" promptText="Model" />
-      <TextField fx:id="txtColour" layoutX="387.0" layoutY="125.0" prefHeight="34.0" prefWidth="150.0" promptText="Colour" />
+      <TextField fx:id="txtColour" layoutX="387.0" layoutY="125.0" prefHeight="34.0" prefWidth="158.0" promptText="Colour" />
       <TextField fx:id="txtPackageId" layoutX="647.0" layoutY="67.0" prefHeight="33.0" prefWidth="110.0" promptText="Package ID" />
-      <TextField fx:id="txtCategory" layoutX="617.0" layoutY="124.0" prefHeight="33.0" prefWidth="143.0" promptText="Category" />
+      <TextField fx:id="txtCategory" layoutX="650.0" layoutY="124.0" prefHeight="34.0" prefWidth="110.0" promptText="Category" />
       <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="15.0" layoutY="189.0" onAction="#btnSaveOnAction" style="-fx-background-color: #FBFBFB; -fx-border-radius: 8; -fx-background-radius: 23; -fx-border-color: black;" text="Save">
          <font>
             <Font name="Times New Roman Bold" size="15.0" />

@@ -1,9 +1,11 @@
 package lk.ijse.gdse.carrentalsystem.dao.custom.impl;
 
+import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleBO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleDAO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleRentDetailDAO;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
+import lk.ijse.gdse.carrentalsystem.dto.VehicleDto;
 import lk.ijse.gdse.carrentalsystem.entity.VechileRentDetail;
 import lk.ijse.gdse.carrentalsystem.util.CrudUtil;
 
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import static lk.ijse.gdse.carrentalsystem.model.VehicleRentDetailModel.vehicleModel;
 
 public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
+    VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
     VechileRentDetail VechileRentDetail=new VechileRentDetail();
     @Override
     public boolean save(VechileRentDetail dto) throws SQLException, ClassNotFoundException {
@@ -94,25 +97,51 @@ public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
 
     }
 
-    @Override
-    public boolean saveVehicleRentList(ArrayList<VechileRentDetailDto> vechileRentDetailDtos) throws SQLException, ClassNotFoundException {
-        for (VechileRentDetailDto vechileRentDetailDto : vechileRentDetailDtos) {
+//    @Override
+//    public boolean saveVehicleRentList(ArrayList<VechileRentDetailDto> vechileRentDetailDtos) throws SQLException, ClassNotFoundException {
+//        for (VechileRentDetailDto vechileRentDetailDto : vechileRentDetailDtos) {
+//
+//            // Save individual vehicle rent detail
+//            boolean isVehicleRentSaved = saveVehicleRent(vechileRentDetailDto);
+//            if (!isVehicleRentSaved) {
+//                return false;  // If saving fails, return false to trigger rollback
+//            }
+//
+//            // Update vehicle quantity after saving rent detail
+//            boolean isVehicleUpdated = vehicleBO.reduceVehicleQuantity(new VehicleDto(
+//                    vechileRentDetailDto.getVehicle_id(),
+//                    vechileRentDetailDto.getVehicle_quantity()
+//            ));
+//            if (!isVehicleUpdated) {
+//                return false;  // If update fails, return false to trigger rollback
+//            }
+//        }
+//        return true;
+//
+//    }
+@Override
+public boolean saveVehicleRentList(ArrayList<VechileRentDetail> vechileRentDetails) throws SQLException, ClassNotFoundException {
+    for (VechileRentDetail vechileRentDetail : vechileRentDetails) {
 
-            // Save individual vehicle rent detail
-            boolean isVehicleRentSaved = save(VechileRentDetail);
-            if (!isVehicleRentSaved) {
-                return false;  // If saving fails, return false to trigger rollback
-            }
-
-            // Update vehicle quantity after saving rent detail
-            boolean isVehicleUpdated = vehicleModel.reduceVehicleQuantity(vechileRentDetailDto);
-            if (!isVehicleUpdated) {
-                return false;  // If update fails, return false to trigger rollback
-            }
+        // Save individual vehicle rent detail
+        boolean isVehicleRentSaved = saveVehicleRent(vechileRentDetail);
+        if (!isVehicleRentSaved) {
+            return false; // If saving fails, return false to trigger rollback
         }
-        return true;
 
+        // Update vehicle quantity after saving rent detail
+        boolean isVehicleUpdated = vehicleBO.reduceVehicleQuantity(new VehicleDto(
+                vechileRentDetail.getVehicle_id(),
+                vechileRentDetail.getVehicle_quantity()
+        ));
+        if (!isVehicleUpdated) {
+            return false; // If update fails, return false to trigger rollback
+        }
     }
+    return true;
+}
+
+
 
     @Override
     public boolean deleteVehicleRent(String rentId, String vehicleId) throws SQLException, ClassNotFoundException {
@@ -137,24 +166,31 @@ public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
 
     }
 
-    @Override
-    public String loadCurrentRentId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT rent_id FROM rent ORDER BY rent_id DESC LIMIT 1");
 
-        if (resultSet.next()) {
-            return resultSet.getString("rent_id");  // Return the most recent rent_id directly
-        }
 
-        return null;
-    }
-    @Override
-    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT vehicle_id FROM vehicle ORDER BY vehicle_id DESC LIMIT 1");
+    //    @Override
+//    public boolean saveVehicleRent(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
+//        return CrudUtil.execute("INSERT INTO vehicle_rent_details VALUES (?,?,?,?,?,?)",
+//                vechileRentDetailDto.getVehicle_id(),
+//                vechileRentDetailDto.getRent_id(),
+//                vechileRentDetailDto.getStart_date(),
+//                vechileRentDetailDto.getEnd_date(),
+//                vechileRentDetailDto.getVehicle_quantity(),
+//                vechileRentDetailDto.getVehicle_condition()
+//        );
+//
+//    }
+@Override
+public boolean saveVehicleRent(VechileRentDetail vechileRentDetail) throws SQLException, ClassNotFoundException {
+    return CrudUtil.execute("INSERT INTO vehicle_rent_details VALUES (?,?,?,?,?,?)",
+            vechileRentDetail.getVehicle_id(),
+            vechileRentDetail.getRent_id(),
+            vechileRentDetail.getStart_date(),
+            vechileRentDetail.getEnd_date(),
+            vechileRentDetail.getVehicle_quantity(),
+            vechileRentDetail.getVehicle_condition()
+    );
+}
 
-        if (resultSet.next()) {
-            return resultSet.getString("vehicle_id");  // Return the most recent vehicle_id directly
-        }
 
-        return null;  //
-    }
 }

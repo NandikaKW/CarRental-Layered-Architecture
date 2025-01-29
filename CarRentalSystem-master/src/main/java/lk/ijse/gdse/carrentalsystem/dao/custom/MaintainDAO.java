@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface MaintainDAO extends CrudDAO<Maintain>{
-    String loadNextVehicleId() throws SQLException, ClassNotFoundException;
-    String loadCurrentVehicleId() throws SQLException, ClassNotFoundException;
+
 
 }

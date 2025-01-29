@@ -5,6 +5,8 @@ import lk.ijse.gdse.carrentalsystem.dao.DAOFactory;
 import lk.ijse.gdse.carrentalsystem.dao.custom.VehicleDAO;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
 import lk.ijse.gdse.carrentalsystem.dto.VehicleDto;
+import lk.ijse.gdse.carrentalsystem.entity.Rent;
+import lk.ijse.gdse.carrentalsystem.entity.VechileRentDetail;
 import lk.ijse.gdse.carrentalsystem.entity.Vehicle;
 
 import java.sql.SQLException;
@@ -83,21 +85,23 @@ public class VehicleBOImpl implements VehicleBO {
         return vehicleDAO.getNextId();
     }
 
-    @Override
-    public String loadNextPackageId() throws SQLException, ClassNotFoundException {
-        return vehicleDAO.loadNextPackageId();
-    }
+
 
     @Override
     public boolean reduceVehicleQuantity(VehicleDto vehicleDto) throws SQLException, ClassNotFoundException {
 
-        VechileRentDetailDto rentDetailDto = new VechileRentDetailDto(
+//        VechileRentDetailDto rentDetailDto = new VechileRentDetailDto(
+//                vehicleDto.getVehicle_id(),
+//                vehicleDto.getQuantity() // Assuming vehicleDto.getQuantity() contains the quantity to reduce
+//        );
+        VechileRentDetail vechileRentDetail=new VechileRentDetail(
                 vehicleDto.getVehicle_id(),
-                vehicleDto.getQuantity() // Assuming vehicleDto.getQuantity() contains the quantity to reduce
+                vehicleDto.getQuantity()
         );
 
 
-        return vehicleDAO.reduceVehicleQuantity(rentDetailDto);
+      //  return vehicleDAO.reduceVehicleQuantity(rentDetailDto);
+        return vehicleDAO.reduceVehicleQuantity(vechileRentDetail);
     }
 
 
@@ -106,9 +110,15 @@ public class VehicleBOImpl implements VehicleBO {
         return vehicleDAO.getAllVehicleIds();
     }
 
+
     @Override
-    public String loadCurrentPackageId() throws SQLException, ClassNotFoundException {
-        return vehicleDAO.loadCurrentPackageId();
+    public String loadNextVehicleId() throws SQLException, ClassNotFoundException {
+        return vehicleDAO.loadNextVehicleId();
+    }
+
+    @Override
+    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
+        return vehicleDAO.loadCurrentVehicleId();
     }
 
 

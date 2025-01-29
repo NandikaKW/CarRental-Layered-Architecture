@@ -19,4 +19,5 @@ public class AppInitilizer extends Application {
         primaryStage.show();
 
     }
+
 }

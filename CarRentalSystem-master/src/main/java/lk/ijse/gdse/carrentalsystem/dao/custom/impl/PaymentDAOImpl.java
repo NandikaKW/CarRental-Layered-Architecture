@@ -1,16 +1,32 @@
 package lk.ijse.gdse.carrentalsystem.dao.custom.impl;
 
 import lk.ijse.gdse.carrentalsystem.dao.custom.PaymentDAO;
+import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
+import lk.ijse.gdse.carrentalsystem.entity.CustomerPayment;
 import lk.ijse.gdse.carrentalsystem.entity.Payment;
 import lk.ijse.gdse.carrentalsystem.util.CrudUtil;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PaymentDAOImpl implements PaymentDAO {
+//    private static final String REDUCE_PAYMENT_AMOUNT_QUERY = "UPDATE payment SET amount = amount - ? WHERE pay_id = ?";
+
+//    @Override
+//    public boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
+//        try {
+//            return CrudUtil.execute("UPDATE payment SET amount = amount - ? WHERE pay_id = ?", customerPaymentDto.getAmount(), customerPaymentDto.getPay_id());
+//        } catch (SQLException e) {
+//            System.out.println("Error while reducing payment amount for pay_id: " + customerPaymentDto.getPay_id());
+//            e.printStackTrace();
+//            throw e;
+//        }
+//    }
     @Override
     public boolean save(Payment dto) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("INSERT INTO payment VALUES(?,?,?,?,?,?,?,?)", dto.getPay_id(), dto.getAmount(), dto.getDate(), dto.getInvoice(), dto.getMethod(), dto.getTransaction_reference(), dto.getTax(), dto.getDiscount_applied());
@@ -101,6 +117,8 @@ public class PaymentDAOImpl implements PaymentDAO {
         return "PAY001";
     }
 
+
+
     @Override
     public ArrayList<String> getAllPaymentIDs() throws SQLException, ClassNotFoundException {
         // Execute SQL query to get all item IDs
@@ -119,21 +137,21 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     }
 
-    @Override
-    public boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
-        try {
-            return  CrudUtil.execute("UPDATE payment SET amount = amount - ? WHERE pay_id = ?",customerPaymentDto.getAmount(),customerPaymentDto.getPay_id());
-        } catch (SQLException e) {
-            System.out.println("Error while reducing payment amount for pay_id: " + customerPaymentDto.getPay_id());
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            System.out.println("Database driver not found.");
-            e.printStackTrace();
-            return false;
-        }
-
-    }
+//    @Override
+//    public boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
+//        try {
+//            return  CrudUtil.execute("UPDATE payment SET amount = amount - ? WHERE pay_id = ?",customerPaymentDto.getAmount(),customerPaymentDto.getPay_id());
+//        } catch (SQLException e) {
+//            System.out.println("Error while reducing payment amount for pay_id: " + customerPaymentDto.getPay_id());
+//            e.printStackTrace();
+//            return false;
+//        } catch (ClassNotFoundException e) {
+//            System.out.println("Database driver not found.");
+//            e.printStackTrace();
+//            return false;
+//        }
+//
+//    }
 
     @Override
     public BigDecimal getAvailablePaymentAmount(String paymentId) throws SQLException, ClassNotFoundException {
@@ -146,6 +164,34 @@ public class PaymentDAOImpl implements PaymentDAO {
             throw new SQLException("Payment ID not found: " + paymentId);
         }
     }
+
+    @Override
+    public String loadCurrentPaymentId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT pay_id FROM payment ORDER BY pay_id DESC LIMIT 1");
+
+        if (resultSet.next()) {
+            return resultSet.getString("pay_id");
+        }
+
+        return null;
+
+    }
+    @Override
+    public boolean reducePaymentAmount(CustomerPayment customerPayment) throws SQLException, ClassNotFoundException {
+        try {
+            // Use the CustomerPayment entity directly
+            return CrudUtil.execute(
+                    "UPDATE payment SET amount = amount - ? WHERE pay_id = ?",
+                    customerPayment.getAmount(),
+                    customerPayment.getPay_id()
+            );
+        } catch (SQLException e) {
+            System.out.println("Error while reducing payment amount for pay_id: " + customerPayment.getPay_id());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 
 
 }

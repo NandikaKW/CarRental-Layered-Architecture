@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.AgrimentBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.PaymentBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.RentBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.RentPaymentBO;
 import lk.ijse.gdse.carrentalsystem.dto.PaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.RentPayemntDto;
@@ -124,6 +126,8 @@ public class RentPaymentDetailsController  implements Initializable {
     private TextField txtRentId;
 
     RentPaymentBO rentPaymentBO = (RentPaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT_PAYMENT);
+    RentBO rentBO = (RentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT);
 
     @FXML
     void ComboDayOnAction(ActionEvent event) {
@@ -566,7 +570,7 @@ public class RentPaymentDetailsController  implements Initializable {
     }
     public void loadCurrentPaymentId() throws SQLException, ClassNotFoundException {
         try {
-            String currentPaymentId = rentPaymentBO.getCurrentPaymentId();
+            String currentPaymentId = paymentBO.getCurrentPaymentId();
 
             txtPaymentId.setText(currentPaymentId);
         } catch (Exception e) {
@@ -578,7 +582,7 @@ public class RentPaymentDetailsController  implements Initializable {
 
     public void loadCurrentRentId() throws SQLException, ClassNotFoundException {
         try {
-            String currentRentId = rentPaymentBO.getCurrentRentId();
+            String currentRentId = rentBO.loadCurrentRentId();
             txtRentId.setText(currentRentId);
         } catch (Exception e) {
             e.printStackTrace();

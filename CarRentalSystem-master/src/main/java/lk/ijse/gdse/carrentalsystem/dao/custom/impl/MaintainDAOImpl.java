@@ -82,29 +82,5 @@ public class MaintainDAOImpl implements MaintainDAO {
 
 
     }
-    @Override
-    public String loadNextVehicleId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT vehicle_id FROM vehicle ORDER BY vehicle_id DESC LIMIT 1");
-        if (resultSet.next()) {
-            String lastID = resultSet.getString("vehicle_id");
-            String substring = lastID.substring(1);
-            int id = Integer.parseInt(substring);
-            int newId = id + 1;
-            return String.format("V%03d", newId);
-        }
-        return "V001";
 
-    }
-
-    @Override
-    public String loadCurrentVehicleId() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT vehicle_id FROM vehicle ORDER BY vehicle_id DESC LIMIT 1");
-
-        if (resultSet.next()) {
-            return resultSet.getString("vehicle_id");  // Return the most recent vehicle_id directly
-        }
-
-        return null;  // Return null if there are no records in the vehicle table
-
-    }
 }

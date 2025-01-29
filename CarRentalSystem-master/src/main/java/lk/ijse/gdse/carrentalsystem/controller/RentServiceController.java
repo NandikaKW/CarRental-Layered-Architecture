@@ -17,6 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
+import lk.ijse.gdse.carrentalsystem.bo.custom.*;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.RentDto;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
@@ -186,6 +188,11 @@ public class RentServiceController  implements Initializable {
 
     @FXML
     private TextField txtQty;
+    RentBO rentBO = (RentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.RENT);
+    AgrimentBO agrimentBO = (AgrimentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.AGRIMENT);
+    VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
+    PackageBO packageBO= (PackageBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PACKAGE);
+    VehicleRentDetailBO vehicleRentDetailBO= (VehicleRentDetailBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE_RENT);
 
     @FXML
     private JFXButton btnReset;
@@ -229,7 +236,7 @@ public class RentServiceController  implements Initializable {
         Optional<ButtonType> optionalButtonType=alert.showAndWait();
         if(optionalButtonType.isPresent() && optionalButtonType.get()==ButtonType.YES){
             try{
-                boolean isDeleted=RentModel.DeleteRent(rentId);
+                boolean isDeleted=rentBO.deleteRent(rentId);
                 if(isDeleted){
                   new Alert(Alert.AlertType.INFORMATION,"Rent deleted successfully").show();
                   clearFields();
@@ -261,35 +268,98 @@ public class RentServiceController  implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String rentId = txtRentId.getText();
-        String startDateStr = txtStartDate.getText();  // renamed variable
-        String endDateStr = txtEndDate.getText();      // renamed variable
-        String custId = txtCustomerId.getText();
-        String agreementId = txtAgrimentID.getText(); // added variable for agreement ID
-
-        // Define a date format that matches your input format (e.g., "yyyy-MM-dd")
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String rentId = txtRentId.getText();
+//        String startDateStr = txtStartDate.getText();  // renamed variable
+//        String endDateStr = txtEndDate.getText();      // renamed variable
+//        String custId = txtCustomerId.getText();
+//        String agreementId = txtAgrimentID.getText(); // added variable for agreement ID
+//
+//        // Define a date format that matches your input format (e.g., "yyyy-MM-dd")
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        try {
+//            // Parse the date strings into Date objects
+//            Date startDate = dateFormat.parse(startDateStr);
+//            Date endDate = dateFormat.parse(endDateStr);
+//
+//            // Create RentDto with the new agreementId
+//            RentDto dto = new RentDto(rentId, startDate, endDate, custId, agreementId);
+//            boolean isSaved = RentModel.saveRent(dto);
+//
+//            if (isSaved) {
+//                new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully").show();
+//                //loadNextCustomerId();
+//                loadCurrentCustomerId();
+//                loadNextRentId();
+//                refreshPage();
+//            } else {
+//                new Alert(Alert.AlertType.ERROR, "Failed to save rent").show();
+//            }
+//        } catch (ParseException e) {
+//            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
+//        }
+        Connection connection = null;
 
         try {
-            // Parse the date strings into Date objects
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false); // Start transaction
+
+            // Retrieve inputs from text fields
+            String rentId = txtRentId.getText();
+            String startDateStr = txtStartDate.getText();
+            String endDateStr = txtEndDate.getText();
+            String custId = txtCustomerId.getText();
+            String agreementId = txtAgrimentID.getText();
+
+            // Parse dates from input strings
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date startDate = dateFormat.parse(startDateStr);
             Date endDate = dateFormat.parse(endDateStr);
 
-            // Create RentDto with the new agreementId
-            RentDto dto = new RentDto(rentId, startDate, endDate, custId, agreementId);
-            boolean isSaved = RentModel.saveRent(dto);
+            // Create RentDto object
+            RentDto rentDto = new RentDto(rentId, startDate, endDate, custId, agreementId);
 
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully").show();
-                //loadNextCustomerId();
-                loadCurrentCustomerId();
-                loadNextRentId();
-                refreshPage();
+            // Save rent details
+            boolean isRentSaved = rentBO.saveRent(rentDto);
+
+            if (isRentSaved) {
+                // Save associated vehicle rent details
+                ArrayList<VechileRentDetailDto> vehicleRentDetailDtos =new ArrayList<>();// Populate this list appropriately
+                boolean isVehicleRentSaved = vehicleRentDetailBO.saveVehicleRentList(vehicleRentDetailDtos);
+
+                if (isVehicleRentSaved) {
+                    connection.commit(); // Commit the transaction
+                    new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully!").show();
+                    loadNextRentId(); // Reload necessary data
+                    refreshPage();
+                } else {
+                    connection.rollback(); // Rollback the transaction
+                    new Alert(Alert.AlertType.ERROR, "Failed to save vehicle rent details!").show();
+                }
             } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save rent").show();
+                connection.rollback(); // Rollback the transaction
+                new Alert(Alert.AlertType.ERROR, "Failed to save rent details!").show();
             }
         } catch (ParseException e) {
             new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            try {
+                if (connection != null) {
+                    connection.rollback(); // Rollback the transaction
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            new Alert(Alert.AlertType.ERROR, "An error occurred while saving rent details!").show();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true); // Restore auto-commit
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -322,7 +392,7 @@ public class RentServiceController  implements Initializable {
             return;
         }
         try {
-            RentDto rent = RentModel.SearchRent(rentId); // Ensure method name is in camelCase
+            RentDto rent = rentBO.searchRent(rentId); // Ensure method name is in camelCase
             if (rent != null) {
                 txtRentId.setText(rent.getRentId()); // Updated to use camelCase
                 txtStartDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(rent.getStartDate())); // Format date for display
@@ -359,7 +429,7 @@ public class RentServiceController  implements Initializable {
             Date endDate = dateFormat.parse(endDateText);
 
             RentDto dto = new RentDto(rentId, startDate, endDate, custId, agreementId); // Include agreementId
-            boolean isUpdated = RentModel.updateRent(dto);
+            boolean isUpdated = rentBO.updateRent(dto);
 
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Rent updated successfully").show();
@@ -398,24 +468,24 @@ public class RentServiceController  implements Initializable {
 
 
     public void loadNextRentId() throws SQLException, ClassNotFoundException {
-        String nextRentId = RentModel.loadNextRentId();
+        String nextRentId = rentBO.getNextRentId();
         txtRentId.setText(nextRentId);
     }
 
     public void loadCurrentAgreementId() throws SQLException, ClassNotFoundException {
-        String currentAgreementId = AgrimentModel.loadCurrentAgreementId();
+        String currentAgreementId = agrimentBO.loadCurrentAgreementId();
         txtAgrimentID.setText(currentAgreementId);
     }
 
     public void loadCmbVehicle() throws SQLException, ClassNotFoundException {
-        ArrayList<String> vehicleIds = vehicleModel.getAllVehicleIds();
+        ArrayList<String> vehicleIds = vehicleBO.getAllVehicleIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(vehicleIds);
         cmbVehicleId.setItems(observableList);
     }
 
     public void loadCmbPackage() throws SQLException, ClassNotFoundException {
-        ArrayList<String> packageIds = packageModel.getAllPackageIds();
+        ArrayList<String> packageIds = packageBO.getIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(packageIds);
         cmbPackageId.setItems(observableList);
@@ -492,7 +562,7 @@ public class RentServiceController  implements Initializable {
         CombMonthOne.setItems(months);
     }
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<RentDto> rentDtos = RentModel.getAllRentData();
+        ArrayList<RentDto> rentDtos = rentBO.getAllRents();
         ObservableList<RentTM> rentTMS = FXCollections.observableArrayList();
 
         for (RentDto rentDto : rentDtos) {
@@ -511,7 +581,7 @@ public class RentServiceController  implements Initializable {
 
 
     private void refreshTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<RentDto> rentDtos = RentModel.getAllRentData();
+        ArrayList<RentDto> rentDtos = rentBO.getAllRents();
         ObservableList<RentTM> rentTMS = FXCollections.observableArrayList();
 
         for (RentDto dto : rentDtos) {

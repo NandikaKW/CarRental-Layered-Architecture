@@ -1,6 +1,7 @@
 package lk.ijse.gdse.carrentalsystem.dao;
 
 import lk.ijse.gdse.carrentalsystem.dto.AdminDto;
+import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.entity.Admin;
 
 import java.sql.SQLException;
@@ -13,6 +14,9 @@ public interface CrudDAO<T> extends SuperDAO {
     T search(String id) throws SQLException, ClassNotFoundException;
     ArrayList<T> getAll() throws SQLException, ClassNotFoundException;
     String getNextId() throws SQLException, ClassNotFoundException;
+
+
+
 
 
 }

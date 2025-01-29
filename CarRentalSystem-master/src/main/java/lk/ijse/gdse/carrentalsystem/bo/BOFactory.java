@@ -13,7 +13,7 @@ public class BOFactory {
     }
 
     public enum BOTypes {
-        ADMIN, EMPLOYEE, PACKAGE, DAMAGE_DETAIL, MAINTAINANCE,AGRIMENT,VEHICLE,VEHICLE_RENT,PAYMENT,RENT_PAYMENT;
+        ADMIN, EMPLOYEE, PACKAGE, DAMAGE_DETAIL, MAINTAINANCE,AGRIMENT,VEHICLE,VEHICLE_RENT,PAYMENT,RENT_PAYMENT,RENT,CUSTOMER,CUSTOMER_PAYMENT;
     }
 
     public SuperBO getBO(BOTypes type) {
@@ -38,6 +38,12 @@ public class BOFactory {
                 return new PaymentBOImpl();
             case RENT_PAYMENT:
                 return new RentPaymentBOImpl();
+            case RENT:
+                return new RentBOImpl();
+            case CUSTOMER:
+                return new CustomerBOImpl();
+            case CUSTOMER_PAYMENT:
+                return new CustomerPaymentBOImpl();
             default:
                 return null;
         }

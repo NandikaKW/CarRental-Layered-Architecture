@@ -13,7 +13,7 @@ public interface VehicleRentDetailBO extends SuperBO {
     VechileRentDetailDto searchVehicleRent(String vehicleId, String rentId) throws SQLException, ClassNotFoundException;
     ArrayList<VechileRentDetailDto> getAllVehicleRentDetails() throws SQLException, ClassNotFoundException;
     String getNextRentId() throws SQLException, ClassNotFoundException;
-    String loadCurrentRentId() throws SQLException, ClassNotFoundException;
-    String loadCurrentVehicleId() throws SQLException, ClassNotFoundException;
+
+
 
 }

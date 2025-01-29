@@ -12,6 +12,5 @@ public interface RentPaymentBO extends SuperBO {
     boolean deleteRentPayment(String rentId, String paymentId) throws SQLException, ClassNotFoundException;
     RentPayemntDto searchRentPayment(String rentId, String paymentId) throws SQLException, ClassNotFoundException;
     List<RentPayemntDto> getAllRentPayments() throws SQLException, ClassNotFoundException;
-    String getCurrentRentId() throws SQLException, ClassNotFoundException;
-    String getCurrentPaymentId() throws SQLException, ClassNotFoundException;
+
 }

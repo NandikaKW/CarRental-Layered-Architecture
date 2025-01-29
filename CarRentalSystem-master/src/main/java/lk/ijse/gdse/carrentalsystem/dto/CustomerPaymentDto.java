@@ -35,8 +35,8 @@ public class CustomerPaymentDto {
         this.pay_id = pay_id;
     }
 
-    public Date getPayment_date() {
-        return payment_date;
+    public java.sql.Date getPayment_date() {
+        return (java.sql.Date) payment_date;
     }
 
     public void setPayment_date(Date payment_date) {

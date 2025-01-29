@@ -3,6 +3,7 @@ package lk.ijse.gdse.carrentalsystem.bo.custom.impl;
 import lk.ijse.gdse.carrentalsystem.bo.custom.PackageBO;
 import lk.ijse.gdse.carrentalsystem.dao.DAOFactory;
 import lk.ijse.gdse.carrentalsystem.dao.custom.PackageDAO;
+import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.PackageDto;
 import lk.ijse.gdse.carrentalsystem.entity.Package;
 
@@ -131,4 +132,10 @@ public class PackageBOImpl implements PackageBO {
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public String loadCurrentPackageId() throws SQLException, ClassNotFoundException {
+        return packageDAO.loadCurrentPackageId();
+    }
+
+
 }

@@ -111,12 +111,5 @@ public class DamageDetailBOImpl implements DamageDetailBO {
 
     }
 
-    @Override
-    public String loadCurrentRentId() throws SQLException {
-        try {
-            return damageDetailDAO.loadCurrentRentId();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }
