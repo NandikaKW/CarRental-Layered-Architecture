@@ -13,8 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
-//    private static final String CHECK_NIC_QUERY = "SELECT COUNT(*) FROM customer WHERE nic_number = ?";
-//    private static final String INSERT_CUSTOMER_QUERY = "INSERT INTO customer (cust_id, name, address, email, nic_number, admin_id) VALUES (?, ?, ?, ?, ?, ?)";
+
 
     private static final String INSERT_PAYMENT_QUERY = "INSERT INTO customerpayment VALUES (?,?,?,?)";
 
