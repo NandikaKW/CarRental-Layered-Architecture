@@ -45,11 +45,11 @@ public class VehicleRentDetailBOImpl implements VehicleRentDetailBO {
 
     }
 
-    @Override
-    public boolean isVehicleRentUpdated(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
-
-        return vehicleRentDetailDAO.isVehicleRentUpdated(vechileRentDetailDto);
-    }
+//    @Override
+//    public boolean isVehicleRentUpdated(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
+//
+//        return vehicleRentDetailDAO.isVehicleRentUpdated(vechileRentDetailDto);
+//    }
 
     @Override
     public boolean deleteVehicleRent(String rentId, String vehicleId) throws SQLException, ClassNotFoundException {

@@ -83,19 +83,19 @@ public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
 
     }
 
-    @Override
-    public boolean isVehicleRentUpdated(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
-        return CrudUtil.execute(
-                "UPDATE vehicle_rent_details SET start_date=?, end_date=?, quantity=?, vehicle_condition=? WHERE vehicle_id=? AND rent_id=?",
-                vechileRentDetailDto.getStart_date(),
-                vechileRentDetailDto.getEnd_date(),
-                vechileRentDetailDto.getVehicle_quantity(),
-                vechileRentDetailDto.getVehicle_condition(),
-                vechileRentDetailDto.getVehicle_id(),
-                vechileRentDetailDto.getRent_id()
-        );
-
-    }
+//    @Override
+//    public boolean isVehicleRentUpdated(VechileRentDetailDto vechileRentDetailDto) throws SQLException, ClassNotFoundException {
+//        return CrudUtil.execute(
+//                "UPDATE vehicle_rent_details SET start_date=?, end_date=?, quantity=?, vehicle_condition=? WHERE vehicle_id=? AND rent_id=?",
+//                vechileRentDetailDto.getStart_date(),
+//                vechileRentDetailDto.getEnd_date(),
+//                vechileRentDetailDto.getVehicle_quantity(),
+//                vechileRentDetailDto.getVehicle_condition(),
+//                vechileRentDetailDto.getVehicle_id(),
+//                vechileRentDetailDto.getRent_id()
+//        );
+//
+//    }
 
 //    @Override
 //    public boolean saveVehicleRentList(ArrayList<VechileRentDetailDto> vechileRentDetailDtos) throws SQLException, ClassNotFoundException {
