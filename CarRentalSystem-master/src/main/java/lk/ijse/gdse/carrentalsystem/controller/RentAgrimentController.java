@@ -119,6 +119,7 @@ public class RentAgrimentController implements Initializable {
 
     AgrimentBO agrimentBO = (AgrimentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.AGRIMENT);
 
+
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String agrimentId = textArgumatId.getText();

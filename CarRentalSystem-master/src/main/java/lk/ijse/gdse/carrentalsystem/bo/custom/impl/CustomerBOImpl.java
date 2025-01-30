@@ -1,19 +1,27 @@
 package lk.ijse.gdse.carrentalsystem.bo.custom.impl;
 
+import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.CustomerBO;
+import lk.ijse.gdse.carrentalsystem.bo.custom.PaymentBO;
 import lk.ijse.gdse.carrentalsystem.dao.DAOFactory;
 import lk.ijse.gdse.carrentalsystem.dao.custom.AdminDAO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.CustomerDAO;
 import lk.ijse.gdse.carrentalsystem.dao.custom.CustomerPaymentDAO;
+import lk.ijse.gdse.carrentalsystem.dao.custom.PaymentDAO;
+import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerDto;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.entity.Customer;
 import lk.ijse.gdse.carrentalsystem.entity.CustomerPayment;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerBOImpl implements CustomerBO {
+    //PaymentDAO paymentDAO = (PaymentDAO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT);
+    PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.PAYMENT);
+
     CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER);
     CustomerPaymentDAO customerPaymentDAO = (CustomerPaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.CUSTOMER_PAYMENT);
 
@@ -114,6 +122,68 @@ public boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto) throws
     // Pass the entity to the DAO layer
     return customerPaymentDAO.saveCustomerPayment(customerPayment);
 }
+    public boolean processCustomerPayment(CustomerDto dto, CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
+        Connection connection = null;
+        try {
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+            boolean isCustomerSaved = customerDAO.save(new Customer(
+                    dto.getCust_id(),
+                    dto.getCust_name(),
+                    dto.getAddress(),
+                    dto.getEmail(),
+                    dto.getNic(),
+                    dto.getAdmin_id()
+            ));
+
+            if (isCustomerSaved) {
+                ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
+                customerPaymentDtos.add(customerPaymentDto);
+
+                boolean isCustomerPaymentSaved = customerPaymentDAO.saveCustomerPayment(new CustomerPayment(
+                        customerPaymentDto.getCust_id(),
+                        customerPaymentDto.getPay_id(),
+                        customerPaymentDto.getPayment_date(),
+                        customerPaymentDto.getAmount()
+                ));
+
+                if (isCustomerPaymentSaved) {
+                    boolean isReducedPayment = paymentDAO.reducePaymentAmount(new CustomerPayment(
+                            customerPaymentDto.getCust_id(),
+                            customerPaymentDto.getPay_id(),
+                            customerPaymentDto.getPayment_date(),
+                            customerPaymentDto.getAmount()
+                    ));
+
+                    if (isReducedPayment) {
+                        connection.commit();
+                        return true;
+                    } else {
+                        connection.rollback();
+                        return false;
+                    }
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+            } else {
+                connection.rollback();
+                return false;
+            }
+        } catch (SQLException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.setAutoCommit(true);
+            }
+        }
+    }
+
+
 
 
 }

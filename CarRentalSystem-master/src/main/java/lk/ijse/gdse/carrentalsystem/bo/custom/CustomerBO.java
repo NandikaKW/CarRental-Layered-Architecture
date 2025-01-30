@@ -18,6 +18,7 @@ public interface CustomerBO extends SuperBO {
     boolean isNicExists(String nic) throws SQLException, ClassNotFoundException;
    // boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException;
    boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException;
+    boolean processCustomerPayment(CustomerDto dto, CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException;
 
 
 }

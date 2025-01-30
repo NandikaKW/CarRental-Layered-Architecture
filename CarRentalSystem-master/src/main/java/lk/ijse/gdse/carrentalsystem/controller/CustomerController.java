@@ -852,77 +852,136 @@ public class CustomerController implements Initializable {
 //            new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
 //            e.printStackTrace();
 //        }
-        Connection connection = null;
+//        Connection connection = null;
+//        try {
+//            connection = DBConnection.getInstance().getConnection();
+//            connection.setAutoCommit(false);
+//            String customerId = txtCustomerID.getText();
+//            String customerName = txtCustomerName.getText();
+//            String address = txtAdress.getText();
+//            String email = txtCustomerNumber.getText();
+//            String nic = txtNIC.getText();
+//            String adminId = txtAdminID.getText();
+//            CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
+//
+//
+//            boolean isCustomerSaved = customerBO.save(dto);
+//
+//
+//            if (isCustomerSaved) {
+//                ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
+//                customerPaymentDtos.add(new CustomerPaymentDto(
+//                        customerId,
+//                        cmbPayemntId.getValue(),
+//                        new java.sql.Date(java.sql.Date.valueOf(txtPaymentDate.getText()).getTime()),
+//                        new BigDecimal(txtPaymentAmount.getText())
+//                ));
+//                boolean isCustomerPaymentSaved = customerPaymentBO.saveCustomerPaymentList(customerPaymentDtos);
+//
+//                if (isCustomerPaymentSaved) {
+//                    boolean isReducedPayment = paymentBO.reducePaymentAmount(customerPaymentDtos.get(0));
+//                    if (isReducedPayment) {
+//                        connection.commit();
+//                        new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+//                        refreshPage();
+//                        loadNextCustomerId();
+//                        loadCurrentAdminId();
+//
+//                    }else {
+//                        connection.rollback();
+//                        new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+//                    }
+//
+//                } else {
+//                    connection.rollback();
+//                    new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+//                }
+//            } else {
+//                connection.rollback();
+//                new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+//            }
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            try {
+//                if (connection != null) {
+//                    connection.rollback();
+//                }
+//            } catch (SQLException rollbackException) {
+//                rollbackException.printStackTrace();
+//
+//            }
+//            new Alert(Alert.AlertType.ERROR, "Database error occurred: " + e.getMessage()).show();
+//
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.setAutoCommit(true);
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            String customerId = txtCustomerID.getText();
-            String customerName = txtCustomerName.getText();
-            String address = txtAdress.getText();
-            String email = txtCustomerNumber.getText();
-            String nic = txtNIC.getText();
-            String adminId = txtAdminID.getText();
-            CustomerDto dto = new CustomerDto(customerId, customerName, address, email, nic, adminId);
+            if (tblSubmit.getItems().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please add payment details.").show();
+                return;
+            }
 
+            if (cmbPayemntId.getSelectionModel().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please select a payment ID.").show();
+                return;
+            }
 
-            boolean isCustomerSaved = customerBO.save(dto);
+            BigDecimal totalPaymentAmount = BigDecimal.ZERO;
+            for (SubmitTM submitTM : tblSubmit.getItems()) {
+                totalPaymentAmount = totalPaymentAmount.add(submitTM.getAmount());
+            }
 
+            BigDecimal requiredPaymentAmount;
+            try {
+                requiredPaymentAmount = new BigDecimal(txtPaymentAmount.getText());
+            } catch (NumberFormatException e) {
+                new Alert(Alert.AlertType.ERROR, "Invalid payment amount entered.").show();
+                return;
+            }
 
-            if (isCustomerSaved) {
-                ArrayList<CustomerPaymentDto> customerPaymentDtos = new ArrayList<>();
-                customerPaymentDtos.add(new CustomerPaymentDto(
-                        customerId,
-                        cmbPayemntId.getValue(),
-                        new java.sql.Date(java.sql.Date.valueOf(txtPaymentDate.getText()).getTime()),
-                        new BigDecimal(txtPaymentAmount.getText())
-                ));
-                boolean isCustomerPaymentSaved = customerPaymentBO.saveCustomerPaymentList(customerPaymentDtos);
+            if (totalPaymentAmount.compareTo(requiredPaymentAmount) != 0) {
+                new Alert(Alert.AlertType.ERROR, "Total payment amount does not match required payment amount.").show();
+                return;
+            }
 
-                if (isCustomerPaymentSaved) {
-                    boolean isReducedPayment = paymentBO.reducePaymentAmount(customerPaymentDtos.get(0));
-                    if (isReducedPayment) {
-                        connection.commit();
-                        new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
-                        refreshPage();
-                        loadNextCustomerId();
-                        loadCurrentAdminId();
+            CustomerDto customerDto = new CustomerDto(
+                    txtCustomerID.getText(),
+                    txtCustomerName.getText(),
+                    txtAdress.getText(),
+                    txtCustomerNumber.getText(),
+                    txtNIC.getText(),
+                    txtAdminID.getText()
+            );
 
-                    }else {
-                        connection.rollback();
-                        new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
-                    }
+            CustomerPaymentDto customerPaymentDto = new CustomerPaymentDto(
+                    txtCustomerID.getText(),
+                    cmbPayemntId.getValue(),
+                    new java.sql.Date(java.sql.Date.valueOf(txtPaymentDate.getText()).getTime()),
+                    new BigDecimal(txtPaymentAmount.getText())
+            );
 
-                } else {
-                    connection.rollback();
-                    new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
-                }
+            boolean isSuccess = customerBO.processCustomerPayment(customerDto, customerPaymentDto);
+            if (isSuccess) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+                refreshPage();
+                loadNextCustomerId();
+                loadCurrentAdminId();
             } else {
-                connection.rollback();
                 new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
             }
 
-
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Database error: " + e.getMessage()).show();
             e.printStackTrace();
-            try {
-                if (connection != null) {
-                    connection.rollback();
-                }
-            } catch (SQLException rollbackException) {
-                rollbackException.printStackTrace();
-
-            }
-            new Alert(Alert.AlertType.ERROR, "Database error occurred: " + e.getMessage()).show();
-
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.setAutoCommit(true);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 

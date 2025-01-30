@@ -267,7 +267,7 @@ public class RentServiceController  implements Initializable {
 
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, ParseException {
 //        String rentId = txtRentId.getText();
 //        String startDateStr = txtStartDate.getText();  // renamed variable
 //        String endDateStr = txtEndDate.getText();      // renamed variable
@@ -298,69 +298,91 @@ public class RentServiceController  implements Initializable {
 //        } catch (ParseException e) {
 //            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
 //        }
-        Connection connection = null;
-
+//        Connection connection = null;
+//
+//        try {
+//            connection = DBConnection.getInstance().getConnection();
+//            connection.setAutoCommit(false); // Start transaction
+//
+//            // Retrieve inputs from text fields
+//            String rentId = txtRentId.getText();
+//            String startDateStr = txtStartDate.getText();
+//            String endDateStr = txtEndDate.getText();
+//            String custId = txtCustomerId.getText();
+//            String agreementId = txtAgrimentID.getText();
+//
+//            // Parse dates from input strings
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            Date startDate = dateFormat.parse(startDateStr);
+//            Date endDate = dateFormat.parse(endDateStr);
+//
+//            // Create RentDto object
+//            RentDto rentDto = new RentDto(rentId, startDate, endDate, custId, agreementId);
+//
+//            // Save rent details
+//            boolean isRentSaved = rentBO.saveRent(rentDto);
+//
+//            if (isRentSaved) {
+//                // Save associated vehicle rent details
+//                ArrayList<VechileRentDetailDto> vehicleRentDetailDtos =new ArrayList<>();// Populate this list appropriately
+//                boolean isVehicleRentSaved = vehicleRentDetailBO.saveVehicleRentList(vehicleRentDetailDtos);
+//
+//                if (isVehicleRentSaved) {
+//                    connection.commit(); // Commit the transaction
+//                    new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully!").show();
+//                    loadNextRentId(); // Reload necessary data
+//                    refreshPage();
+//                } else {
+//                    connection.rollback(); // Rollback the transaction
+//                    new Alert(Alert.AlertType.ERROR, "Failed to save vehicle rent details!").show();
+//                }
+//            } else {
+//                connection.rollback(); // Rollback the transaction
+//                new Alert(Alert.AlertType.ERROR, "Failed to save rent details!").show();
+//            }
+//        } catch (ParseException e) {
+//            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//            try {
+//                if (connection != null) {
+//                    connection.rollback(); // Rollback the transaction
+//                }
+//            } catch (SQLException rollbackEx) {
+//                rollbackEx.printStackTrace();
+//            }
+//            new Alert(Alert.AlertType.ERROR, "An error occurred while saving rent details!").show();
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.setAutoCommit(true); // Restore auto-commit
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false); // Start transaction
-
-            // Retrieve inputs from text fields
             String rentId = txtRentId.getText();
             String startDateStr = txtStartDate.getText();
             String endDateStr = txtEndDate.getText();
             String custId = txtCustomerId.getText();
             String agreementId = txtAgrimentID.getText();
+            ArrayList<VechileRentDetailDto> vehicleRentDetailDtos = new ArrayList<>(); // Populate as needed
 
-            // Parse dates from input strings
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = dateFormat.parse(startDateStr);
-            Date endDate = dateFormat.parse(endDateStr);
+            boolean isTransactionSuccessful = rentBO.processRentTransaction(rentId, startDateStr, endDateStr, custId, agreementId, vehicleRentDetailDtos);
 
-            // Create RentDto object
-            RentDto rentDto = new RentDto(rentId, startDate, endDate, custId, agreementId);
-
-            // Save rent details
-            boolean isRentSaved = rentBO.saveRent(rentDto);
-
-            if (isRentSaved) {
-                // Save associated vehicle rent details
-                ArrayList<VechileRentDetailDto> vehicleRentDetailDtos =new ArrayList<>();// Populate this list appropriately
-                boolean isVehicleRentSaved = vehicleRentDetailBO.saveVehicleRentList(vehicleRentDetailDtos);
-
-                if (isVehicleRentSaved) {
-                    connection.commit(); // Commit the transaction
-                    new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully!").show();
-                    loadNextRentId(); // Reload necessary data
-                    refreshPage();
-                } else {
-                    connection.rollback(); // Rollback the transaction
-                    new Alert(Alert.AlertType.ERROR, "Failed to save vehicle rent details!").show();
-                }
+            if (isTransactionSuccessful) {
+                new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully!").show();
+                loadNextRentId();
+                refreshPage();
             } else {
-                connection.rollback(); // Rollback the transaction
-                new Alert(Alert.AlertType.ERROR, "Failed to save rent details!").show();
+                new Alert(Alert.AlertType.ERROR, "Failed to save rent transaction!").show();
             }
-        } catch (ParseException e) {
-            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            try {
-                if (connection != null) {
-                    connection.rollback(); // Rollback the transaction
-                }
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
             new Alert(Alert.AlertType.ERROR, "An error occurred while saving rent details!").show();
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.setAutoCommit(true); // Restore auto-commit
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
 
     }
 

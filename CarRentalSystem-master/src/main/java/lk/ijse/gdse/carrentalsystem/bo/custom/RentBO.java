@@ -2,8 +2,10 @@ package lk.ijse.gdse.carrentalsystem.bo.custom;
 
 import lk.ijse.gdse.carrentalsystem.bo.SuperBO;
 import lk.ijse.gdse.carrentalsystem.dto.RentDto;
+import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public interface RentBO extends SuperBO {
@@ -15,4 +17,5 @@ public interface RentBO extends SuperBO {
     String getNextRentId() throws SQLException, ClassNotFoundException;
     ArrayList<String> getAllRentIds() throws SQLException, ClassNotFoundException;
     String loadCurrentRentId() throws SQLException;
+    boolean processRentTransaction(String rentId, String startDateStr, String endDateStr, String custId, String agreementId, ArrayList<VechileRentDetailDto> vehicleRentDetailDtos) throws SQLException, ClassNotFoundException, ParseException;
 }
