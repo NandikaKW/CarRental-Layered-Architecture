@@ -16,6 +16,7 @@ public interface PackageBO extends SuperBO {
     String getNextId() throws SQLException;
     ArrayList<String> getIds() throws SQLException;
     String loadCurrentPackageId() throws SQLException, ClassNotFoundException;
+    ArrayList<PackageDto> getAllPackages() throws SQLException, ClassNotFoundException;
 
 
 }

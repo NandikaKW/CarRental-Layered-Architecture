@@ -99,19 +99,21 @@ public class VehicleDAOImpl implements VehicleDAO {
 //    }
 @Override
 public boolean reduceVehicleQuantity(VechileRentDetail vechileRentDetail) throws SQLException, ClassNotFoundException {
-    try {
-        // Execute the update statement to reduce quantity by 1
-        return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ?",
-                vechileRentDetail.getVehicle_quantity(), vechileRentDetail.getVehicle_id());
-    } catch (SQLException e) {
-        System.err.println("Error while reducing vehicle quantity for vehicle_id: " + vechileRentDetail.getVehicle_id());
-        e.printStackTrace();
-        return false;
-    } catch (ClassNotFoundException e) {
-        System.err.println("Database driver not found.");
-        e.printStackTrace();
-        return false;
-    }
+//    try {
+//        // Execute the update statement to reduce quantity by 1
+//        return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ?",
+//                vechileRentDetail.getVehicle_quantity(), vechileRentDetail.getVehicle_id());
+//    } catch (SQLException e) {
+//        System.err.println("Error while reducing vehicle quantity for vehicle_id: " + vechileRentDetail.getVehicle_id());
+//        e.printStackTrace();
+//        return false;
+//    } catch (ClassNotFoundException e) {
+//        System.err.println("Database driver not found.");
+//        e.printStackTrace();
+//        return false;
+//    }
+    return CrudUtil.execute("UPDATE vehicle SET quantity = quantity - ? WHERE vehicle_id = ? AND quantity >= ?",
+            vechileRentDetail.getVehicle_quantity(), vechileRentDetail.getVehicle_id(), vechileRentDetail.getVehicle_quantity());
 }
 
 

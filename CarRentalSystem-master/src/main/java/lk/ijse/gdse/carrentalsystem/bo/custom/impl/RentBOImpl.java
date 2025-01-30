@@ -104,6 +104,8 @@ public class RentBOImpl implements RentBO {
         }
     }
     public boolean processRentTransaction(String rentId, String startDateStr, String endDateStr, String custId, String agreementId, ArrayList<VechileRentDetailDto> vehicleRentDetailDtos) throws SQLException, ClassNotFoundException, ParseException {
+
+
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -134,6 +136,7 @@ public class RentBOImpl implements RentBO {
                             dto.getVehicle_condition());
                     vehicleRentDetails.add(entity);
                 }
+
 
 // Save associated vehicle rent details
                 boolean isVehicleRentSaved = vehicleRentDetailDAO.saveVehicleRentList(vehicleRentDetails);

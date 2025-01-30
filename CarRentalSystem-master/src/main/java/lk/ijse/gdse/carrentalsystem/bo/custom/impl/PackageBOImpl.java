@@ -132,6 +132,15 @@ public class PackageBOImpl implements PackageBO {
             throw new RuntimeException(e);
         }
     }
+@Override
+public ArrayList<PackageDto> getAllPackages() throws SQLException {
+    try {
+        return packageDAO.getAllPackages(); // Fetch all package details, not just IDs
+    } catch (ClassNotFoundException e) {
+        throw new RuntimeException(e);
+    }
+}
+
     @Override
     public String loadCurrentPackageId() throws SQLException, ClassNotFoundException {
         return packageDAO.loadCurrentPackageId();

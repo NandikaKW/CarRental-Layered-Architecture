@@ -15,7 +15,7 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.MaintainBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleBO;
 import lk.ijse.gdse.carrentalsystem.dto.MaintainDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.MaintainTM;
-import lk.ijse.gdse.carrentalsystem.model.MaintinModel;
+//import lk.ijse.gdse.carrentalsystem.model.MaintinModel;
 
 import java.math.BigDecimal;
 import java.net.URL;

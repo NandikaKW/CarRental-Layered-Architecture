@@ -16,7 +16,7 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.RentBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.RentPaymentBO;
 import lk.ijse.gdse.carrentalsystem.dto.PaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.RentPayemntDto;
-import lk.ijse.gdse.carrentalsystem.model.RentPaymentModel;
+//import lk.ijse.gdse.carrentalsystem.model.RentPaymentModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.RentPaymentTM;
 
 import java.math.BigDecimal;

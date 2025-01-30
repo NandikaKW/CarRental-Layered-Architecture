@@ -17,9 +17,9 @@ import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.VehicleDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.ReserveTM;
 import lk.ijse.gdse.carrentalsystem.dto.tm.VehicleRentDetailTM;
-import lk.ijse.gdse.carrentalsystem.model.CustomerModel;
-import lk.ijse.gdse.carrentalsystem.model.RentModel;
-import lk.ijse.gdse.carrentalsystem.model.VehicleModel;
+//import lk.ijse.gdse.carrentalsystem.model.CustomerModel;
+//import lk.ijse.gdse.carrentalsystem.model.RentModel;
+//import lk.ijse.gdse.carrentalsystem.model.VehicleModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.VehicleTM;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -111,15 +111,15 @@ public class VehicleDetailsController  implements Initializable {
 
     @FXML
     private TextField txtVehicleId;
-    private final RentModel rentModel=new RentModel();
-    private final CustomerModel customerModel=new CustomerModel();
-    private  VehicleModel vehicleModel;
+   // private final RentModel rentModel=new RentModel();
+   // private final CustomerModel customerModel=new CustomerModel();
+   // private  VehicleModel vehicleModel;
 
     private final ObservableList<ReserveTM> reserveTMS = FXCollections.observableArrayList();
 
-    public VehicleDetailsController() {
-        vehicleModel = new VehicleModel();
-    }
+//    public VehicleDetailsController() {
+//        vehicleModel = new VehicleModel();
+//    }
 
 
     @FXML

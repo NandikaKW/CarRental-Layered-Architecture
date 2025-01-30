@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static lk.ijse.gdse.carrentalsystem.model.VehicleRentDetailModel.vehicleModel;
+//import static lk.ijse.gdse.carrentalsystem.model.VehicleRentDetailModel.vehicleModel;
 
 public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
     VehicleBO vehicleBO= (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.VEHICLE);
@@ -121,25 +121,60 @@ public class VehicleRentDetailDAOImpl implements VehicleRentDetailDAO {
 //    }
 @Override
 public boolean saveVehicleRentList(ArrayList<VechileRentDetail> vechileRentDetails) throws SQLException, ClassNotFoundException {
+//    for (VechileRentDetail vechileRentDetail : vechileRentDetails) {
+//
+//        // Save individual vehicle rent detail
+//        boolean isVehicleRentSaved = saveVehicleRent(vechileRentDetail);
+//        if (!isVehicleRentSaved) {
+//            return false; // If saving fails, return false to trigger rollback
+//        }
+//
+//        // Update vehicle quantity after saving rent detail
+//        boolean isVehicleUpdated = vehicleBO.reduceVehicleQuantity(new VehicleDto(
+//                vechileRentDetail.getVehicle_id(),
+//                vechileRentDetail.getVehicle_quantity()
+//        ));
+//        if (!isVehicleUpdated) {
+//            return false; // If update fails, return false to trigger rollback
+//        }
+//    }
+//    return true;
     for (VechileRentDetail vechileRentDetail : vechileRentDetails) {
-
-        // Save individual vehicle rent detail
-        boolean isVehicleRentSaved = saveVehicleRent(vechileRentDetail);
-        if (!isVehicleRentSaved) {
-            return false; // If saving fails, return false to trigger rollback
+        // First, check if there's enough quantity to rent
+        if (!isVehicleAvailable(vechileRentDetail.getVehicle_id(), vechileRentDetail.getVehicle_quantity())) {
+            System.err.println("Not enough vehicles available for vehicle_id: " + vechileRentDetail.getVehicle_id());
+            return false;
         }
 
-        // Update vehicle quantity after saving rent detail
+        // Reduce vehicle quantity first
         boolean isVehicleUpdated = vehicleBO.reduceVehicleQuantity(new VehicleDto(
                 vechileRentDetail.getVehicle_id(),
                 vechileRentDetail.getVehicle_quantity()
         ));
+
         if (!isVehicleUpdated) {
-            return false; // If update fails, return false to trigger rollback
+            System.err.println("Failed to update vehicle quantity for vehicle_id: " + vechileRentDetail.getVehicle_id());
+            return false;
+        }
+
+        // Then save vehicle rent detail
+        boolean isVehicleRentSaved = saveVehicleRent(vechileRentDetail);
+        if (!isVehicleRentSaved) {
+            System.err.println("Failed to save vehicle rent detail for rent_id: " + vechileRentDetail.getRent_id());
+            return false;
         }
     }
     return true;
 }
+    public boolean isVehicleAvailable(String vehicleId, int requiredQuantity) throws SQLException, ClassNotFoundException {
+        ResultSet rs = CrudUtil.execute("SELECT quantity FROM vehicle WHERE vehicle_id = ?", vehicleId);
+        if (rs.next()) {
+            int availableQuantity = rs.getInt("quantity");
+            return availableQuantity >= requiredQuantity;
+        }
+        return false;
+    }
+
 
 
 

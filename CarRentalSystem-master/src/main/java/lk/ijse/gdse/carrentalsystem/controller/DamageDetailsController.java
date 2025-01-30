@@ -14,7 +14,7 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.DamageDetailBO;
 import lk.ijse.gdse.carrentalsystem.bo.custom.RentBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.DamageDto;
-import lk.ijse.gdse.carrentalsystem.model.DamageModel;
+//import lk.ijse.gdse.carrentalsystem.model.DamageModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.DamageTM;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;

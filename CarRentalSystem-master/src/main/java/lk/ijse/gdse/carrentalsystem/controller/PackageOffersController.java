@@ -13,7 +13,7 @@ import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.PackageBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.PackageDto;
-import lk.ijse.gdse.carrentalsystem.model.PackageModel;
+//import lk.ijse.gdse.carrentalsystem.model.PackageModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.PackageTM;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -529,7 +529,7 @@ public class PackageOffersController  implements Initializable {
 
 private void loadTableData() throws SQLException, ClassNotFoundException {
     // Retrieve all packages as DTO objects
-    ArrayList<PackageDto> packageDtos = PackageModel.getAllPackages();
+    ArrayList<PackageDto> packageDtos = packageBO.getAllPackages();
 
 
     ObservableList<PackageTM> packageTMS = FXCollections.observableArrayList();

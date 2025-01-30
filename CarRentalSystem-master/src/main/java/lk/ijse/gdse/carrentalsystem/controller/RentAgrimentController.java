@@ -15,7 +15,7 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.AgrimentBO;
 import lk.ijse.gdse.carrentalsystem.dto.AgrimentDto;
 import lk.ijse.gdse.carrentalsystem.dto.RentDto;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
-import lk.ijse.gdse.carrentalsystem.model.AgrimentModel;
+//import lk.ijse.gdse.carrentalsystem.model.AgrimentModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.AgrimentTM;
 
 import java.math.BigDecimal;
@@ -269,7 +269,7 @@ public class RentAgrimentController implements Initializable {
             AgrimentDto agrimentDto = new AgrimentDto(agrimentId, paymentTerms, startDate, endDate, depositAmount, cost);
 
             // Save the agreement
-            boolean isSaved = AgrimentModel.saveAgriment(agrimentDto);
+            boolean isSaved = agrimentBO.saveAgriment(agrimentDto);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Rent Agreement Saved").show();

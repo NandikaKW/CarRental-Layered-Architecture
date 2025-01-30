@@ -1,6 +1,7 @@
 package lk.ijse.gdse.carrentalsystem.dao.custom.impl;
 
 import lk.ijse.gdse.carrentalsystem.dao.custom.PackageDAO;
+import lk.ijse.gdse.carrentalsystem.dto.PackageDto;
 import lk.ijse.gdse.carrentalsystem.dto.PaymentDto;
 import lk.ijse.gdse.carrentalsystem.entity.Package;
 import lk.ijse.gdse.carrentalsystem.util.CrudUtil;
@@ -124,4 +125,24 @@ public class PackageDAOImpl implements PackageDAO {
         return null;  // Return null if there are no records in the package table
 
     }
+    @Override
+    public ArrayList<PackageDto> getAllPackages() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("SELECT * FROM package");
+
+        ArrayList<PackageDto> packageList = new ArrayList<>();
+        while (rst.next()) {
+            packageList.add(new PackageDto(
+                    rst.getString("package_id"),
+                    rst.getString("package_name"),
+                    rst.getBigDecimal("total_cost"), // Corrected to BigDecimal
+                    rst.getBoolean("insurance_included"),
+                    rst.getString("rental_duration"), // Changed from int to String
+                    rst.getDate("rent_date"),
+                    rst.getString("mileage_limit"), // Changed from int to String
+                    rst.getString("description")
+            ));
+        }
+        return packageList;
+    }
+
 }

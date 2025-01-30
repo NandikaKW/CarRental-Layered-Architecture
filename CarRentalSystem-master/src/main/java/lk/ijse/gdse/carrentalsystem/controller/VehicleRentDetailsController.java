@@ -17,7 +17,7 @@ import lk.ijse.gdse.carrentalsystem.bo.custom.VehicleRentDetailBO;
 import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.VehicleTM;
-import lk.ijse.gdse.carrentalsystem.model.VehicleRentDetailModel;
+//import lk.ijse.gdse.carrentalsystem.model.VehicleRentDetailModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.VehicleRentDetailTM;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -399,7 +399,9 @@ public class VehicleRentDetailsController  implements Initializable {
         );
 
         try {
-            boolean isSaved =VehicleRentDetailModel.saveVehicleRent(vehicleRentDetailDto);
+           // boolean isSaved =vehicleRentDetailBO.saveVehicleRentList(Collections.singletonList(vehicleRentDetailDto));
+            boolean isSaved = vehicleRentDetailBO.saveVehicleRentList(new ArrayList<>(Collections.singletonList(vehicleRentDetailDto)));
+
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Vehicle Rent Saved Successfully").show();
                 refreshPage();

@@ -22,10 +22,10 @@ import lk.ijse.gdse.carrentalsystem.db.DBConnection;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerDto;
 import lk.ijse.gdse.carrentalsystem.dto.CustomerPaymentDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.SubmitTM;
-import lk.ijse.gdse.carrentalsystem.model.CustomerModel;
+//import lk.ijse.gdse.carrentalsystem.model.CustomerModel;
 import lk.ijse.gdse.carrentalsystem.dto.tm.CustomerTM;
-import lk.ijse.gdse.carrentalsystem.model.PaymentModel;
-import lk.ijse.gdse.carrentalsystem.model.RentModel;
+//import lk.ijse.gdse.carrentalsystem.model.PaymentModel;
+//import lk.ijse.gdse.carrentalsystem.model.RentModel;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -41,7 +41,7 @@ import java.util.*;
 public class CustomerController implements Initializable {
 
     public TableColumn colCustomerEmail;
-    CustomerModel customerModel = new CustomerModel();
+    //CustomerModel customerModel = new CustomerModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
