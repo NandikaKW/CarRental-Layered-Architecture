@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class AppInitilizer extends Application {
     public static void main(String[] args) {
+
         launch(args);
     }
     @Override
