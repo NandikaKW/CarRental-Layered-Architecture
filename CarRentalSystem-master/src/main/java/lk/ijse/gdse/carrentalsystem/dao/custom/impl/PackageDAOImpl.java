@@ -110,7 +110,7 @@ public class PackageDAOImpl implements PackageDAO {
             packageIds.add(rst.getString(1));
         }
 
-        // Return the list of item IDs
+
         return packageIds;
     }
 
