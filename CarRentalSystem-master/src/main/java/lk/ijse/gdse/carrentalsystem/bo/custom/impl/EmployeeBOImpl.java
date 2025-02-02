@@ -71,7 +71,6 @@ public class EmployeeBOImpl implements EmployeeBO {
 
     }
 
-    // Get all Employees
     @Override
     public ArrayList<EmployeeDto> getAll() throws SQLException {
         ArrayList<Employee> employeeList = null;

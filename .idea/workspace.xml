@@ -4,28 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7126fda7-a10b-4c2c-ab4a-6ccb3759fa04" name="Changes" comment="Remove the Model layers">
+    <list default="true" id="7126fda7-a10b-4c2c-ab4a-6ccb3759fa04" name="Changes" comment="final commit.">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/bo/custom/impl/AdminBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/bo/custom/impl/AdminBOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/bo/custom/impl/EmployeeBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/bo/custom/impl/EmployeeBOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/RentServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/RentServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/VehicleRentDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/controller/VehicleRentDetailsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/dao/custom/impl/AdminDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/dao/custom/impl/AdminDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/dao/custom/impl/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/dao/custom/impl/EmployeeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/model/RentModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/model/VehicleModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/java/lk/ijse/gdse/carrentalsystem/model/VehicleRentDetailModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/src/main/resources/view/VehicleRentDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/src/main/resources/view/VehicleRentDetails.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/bo/custom/impl/AdminBOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/bo/custom/impl/AdminBOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/bo/custom/impl/EmployeeBOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/bo/custom/impl/EmployeeBOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/AdminController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/EmployeeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/EmployeeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/VehicleRentDetailsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/controller/VehicleRentDetailsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/dao/custom/impl/AdminDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/dao/custom/impl/AdminDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/dao/custom/impl/EmployeeDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/lk/ijse/gdse/carrentalsystem/dao/custom/impl/EmployeeDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/view/VehicleRentDetails.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/CarRentalSystem-master/target/classes/view/VehicleRentDetails.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +27,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -168,6 +154,9 @@
       <workItem from="1738374722934" duration="869000" />
       <workItem from="1738378628505" duration="10000" />
       <workItem from="1738389822751" duration="12000" />
+      <workItem from="1738494945368" duration="477000" />
+      <workItem from="1738495696237" duration="6522000" />
+      <workItem from="1738513755803" duration="3400000" />
     </task>
     <task id="LOCAL-00001" summary="BoFactory">
       <option name="closed" value="true" />
@@ -257,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738262948662</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="final commit.">
+      <option name="closed" value="true" />
+      <created>1738495249027</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1738495249027</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,7 +273,8 @@
     <MESSAGE value="fifth  commit" />
     <MESSAGE value="Transaction move to Bo Layer" />
     <MESSAGE value="Remove the Model layers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove the Model layers" />
+    <MESSAGE value="final commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="final commit." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

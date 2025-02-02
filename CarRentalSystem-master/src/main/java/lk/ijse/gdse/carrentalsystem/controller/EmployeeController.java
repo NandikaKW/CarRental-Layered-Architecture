@@ -14,6 +14,7 @@ import lk.ijse.gdse.carrentalsystem.bo.BOFactory;
 import lk.ijse.gdse.carrentalsystem.bo.custom.EmployeeBO;
 import lk.ijse.gdse.carrentalsystem.dto.EmployeeDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.EmployeeTM;
+import lk.ijse.gdse.carrentalsystem.entity.Employee;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -130,6 +131,7 @@ public class EmployeeController implements Initializable {
 
 
     }
+
     private void refreshTableData() throws SQLException, ClassNotFoundException {
         ArrayList<EmployeeDto> employeeDtos=employeeBO.getAll();
         ObservableList<EmployeeTM> employeeTMS=FXCollections.observableArrayList();
@@ -257,6 +259,7 @@ public class EmployeeController implements Initializable {
         }
 
     }
+
 
     private void resetFieldStyles() {
         txtEmployeeID.setStyle("");
