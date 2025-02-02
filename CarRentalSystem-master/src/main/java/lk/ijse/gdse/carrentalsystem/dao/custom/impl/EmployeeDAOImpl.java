@@ -15,6 +15,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return CrudUtil.execute("INSERT INTO employee VALUES(?,?,?,?,?,?)",
                 employee.getEmp_id(), employee.getEmp_name(), employee.getAddress(),
                 employee.getJob(), employee.getSalary(), employee.getAdmin_id());
+
     }
 
     @Override
@@ -23,10 +24,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 employee.getEmp_name(), employee.getAddress(), employee.getJob(),
                 employee.getSalary(), employee.getAdmin_id(), employee.getEmp_id());
     }
-
     @Override
     public boolean delete(String Id) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM employee WHERE emp_id=?", Id);
+
     }
 
     @Override
@@ -43,6 +44,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             );
         }
         return null;
+
     }
 
     @Override
@@ -60,6 +62,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             ));
         }
         return employees;
+
+
     }
 
 
@@ -74,5 +78,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             return String.format("E%03d", newId);
         }
         return "E001";
+
     }
 }

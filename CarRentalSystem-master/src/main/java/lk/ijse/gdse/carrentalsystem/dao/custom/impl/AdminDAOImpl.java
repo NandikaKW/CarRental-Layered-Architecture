@@ -16,18 +16,21 @@ public class AdminDAOImpl implements AdminDAO {
                 entity.getUserName(),
                 entity.getEmail(),
                 entity.getPassword());
+
     }
     @Override
-    public boolean update(Admin adminDto) throws SQLException, ClassNotFoundException {
+    public boolean update(Admin admin) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("UPDATE Admin SET username = ?, email = ?, password = ? WHERE admin_id = ?",
-                adminDto.getUserName(),
-                adminDto.getEmail(),
-                adminDto.getPassword(),
-                adminDto.getAdmin_id());
+                admin.getUserName(),
+                admin.getEmail(),
+                admin.getPassword(),
+                admin.getAdmin_id());
+
     }
     @Override
     public boolean delete(String Id) throws SQLException, ClassNotFoundException {
         return CrudUtil.execute("DELETE FROM Admin WHERE admin_id = ?", Id);
+
     }
 
     @Override
@@ -42,6 +45,7 @@ public class AdminDAOImpl implements AdminDAO {
             );
         }
         return null;
+
     }
 
     @Override
@@ -57,6 +61,10 @@ public class AdminDAOImpl implements AdminDAO {
             ));
         }
         return adminList;
+
+
+
+
     }
     @Override
     public String getNextId() throws SQLException, ClassNotFoundException {
@@ -71,6 +79,7 @@ public class AdminDAOImpl implements AdminDAO {
             }
         }
         return "A001";
+
     }
 
     @Override

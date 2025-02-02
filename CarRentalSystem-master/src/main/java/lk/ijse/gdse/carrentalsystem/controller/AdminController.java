@@ -95,6 +95,7 @@ public class AdminController implements Initializable {
             }
         }
 
+
     }
     private void refreshTableData() throws SQLException, ClassNotFoundException {
         ArrayList<AdminDto> adminDtos= adminBO.getAll();
@@ -155,6 +156,7 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Unexpected error: " + e.getMessage()).show();
         }
+
     }
 
 
@@ -233,6 +235,7 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Unexpected error: " + e.getMessage()).show();
         }
+
     }
 
 
@@ -310,6 +313,7 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Unexpected error: " + e.getMessage()).show();
         }
+
     }
 
     @FXML
@@ -374,12 +378,14 @@ public class AdminController implements Initializable {
 
         }
         tblAdmin.setItems(adminTMS);
+
     }
 
 
     public void loadNextAdminId() throws SQLException, ClassNotFoundException {
         String nextAdminId = adminBO.getNextId();
         txtAdminID.setText(nextAdminId);
+
     }
 
 
@@ -395,6 +401,7 @@ public class AdminController implements Initializable {
             btnSave.setDisable(true);
 
         }
+
     }
 
 

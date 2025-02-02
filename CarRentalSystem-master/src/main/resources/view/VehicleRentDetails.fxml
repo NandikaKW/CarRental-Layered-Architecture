@@ -71,17 +71,12 @@
         </columns>
       </TableView>
       <Accordion />
-      <JFXButton fx:id="btnSave" buttonType="RAISED" layoutX="14.0" layoutY="259.0" onAction="#btnSaveOnAction" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-radius: 8; -fx-border-color: black;" text="Save ">
+      <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="16.0" layoutY="258.0" onAction="#btnDeleteOnAction" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-radius: 8; -fx-border-color: black;" text="Delete">
          <font>
             <Font name="Times New Roman Bold Italic" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnDelete" buttonType="RAISED" layoutX="93.0" layoutY="258.0" onAction="#btnDeleteOnAction" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-radius: 8; -fx-border-color: black;" text="Delete">
-         <font>
-            <Font name="Times New Roman Bold Italic" size="15.0" />
-         </font>
-      </JFXButton>
-      <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="174.0" layoutY="258.0" onAction="#btnResetOnAction" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-radius: 8; -fx-border-color: black;" text="Reset">
+      <JFXButton fx:id="btnReset" buttonType="RAISED" layoutX="92.0" layoutY="258.0" onAction="#btnResetOnAction" style="-fx-background-color: #FBFBFB; -fx-background-radius: 23; -fx-border-radius: 8; -fx-border-color: black;" text="Reset">
          <font>
             <Font name="Times New Roman Bold Italic" size="15.0" />
          </font>

@@ -37,6 +37,7 @@ public class AdminBOImpl implements AdminBO {
             System.out.println("Error saving admin: " + e.getMessage());
             throw e; // Rethrow or handle exception as needed
         }
+
     }
 
 
@@ -48,6 +49,7 @@ public class AdminBOImpl implements AdminBO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     // Delete Admin by ID
@@ -58,6 +60,7 @@ public class AdminBOImpl implements AdminBO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     // Get all Admins
@@ -81,6 +84,8 @@ public class AdminBOImpl implements AdminBO {
             ));
         }
         return adminDtoList;
+
+
     }
 
     // Get the next Admin ID
@@ -91,6 +96,7 @@ public class AdminBOImpl implements AdminBO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override
@@ -123,6 +129,7 @@ public class AdminBOImpl implements AdminBO {
         }
 
         return adminDto;  // Return the AdminDto object
+
     }
 
 }

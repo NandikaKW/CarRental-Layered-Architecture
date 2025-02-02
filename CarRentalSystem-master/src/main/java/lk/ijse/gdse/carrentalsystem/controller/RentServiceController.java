@@ -25,7 +25,7 @@ import lk.ijse.gdse.carrentalsystem.dto.VechileRentDetailDto;
 import lk.ijse.gdse.carrentalsystem.dto.VehicleDto;
 import lk.ijse.gdse.carrentalsystem.dto.tm.CartTM;
 import lk.ijse.gdse.carrentalsystem.dto.tm.ReserveTM;
-import lk.ijse.gdse.carrentalsystem.model.*;
+//import lk.ijse.gdse.carrentalsystem.model.*;
 import lk.ijse.gdse.carrentalsystem.dto.tm.RentTM;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;

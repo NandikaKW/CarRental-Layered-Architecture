@@ -128,6 +128,7 @@ public class EmployeeController implements Initializable {
             }
         }
 
+
     }
     private void refreshTableData() throws SQLException, ClassNotFoundException {
         ArrayList<EmployeeDto> employeeDtos=employeeBO.getAll();
@@ -147,6 +148,7 @@ public class EmployeeController implements Initializable {
         }
         tblEmployee.setItems(employeeTMS);
     }
+
 
 
     private  void clearFields(){
@@ -253,6 +255,7 @@ public class EmployeeController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
             }
         }
+
     }
 
     private void resetFieldStyles() {
@@ -307,6 +310,7 @@ public class EmployeeController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "An unexpected error occurred: " + e.getMessage()).show();
         }
+
 
     }
 
@@ -389,6 +393,7 @@ public class EmployeeController implements Initializable {
         }
 
     }
+
     @FXML
     private TableView<EmployeeTM> tblEmployee;
 
@@ -453,14 +458,12 @@ public class EmployeeController implements Initializable {
         ObservableList<EmployeeTM> employeeTMS=FXCollections.observableArrayList();
         for(EmployeeDto  employeeDto:employeeDtos){
             EmployeeTM employeeTM=new EmployeeTM(
-                   employeeDto.getEmp_id(),
+                    employeeDto.getEmp_id(),
                     employeeDto.getEmp_name(),
                     employeeDto.getAddress(),
                     employeeDto.getJob(),
                     employeeDto.getSalary(),
                     employeeDto.getAdmin_id()
-
-
 
             );
             employeeTMS.add(employeeTM);
@@ -472,9 +475,11 @@ public class EmployeeController implements Initializable {
 
 
 
+
     public void loadNextEmployeeId() throws SQLException,ClassNotFoundException{
         String nextEmployeeId=employeeBO.getNextId();
         txtEmployeeID.setText(nextEmployeeId);
+
     }
 
     public void loadCurrentAdminId() throws SQLException, ClassNotFoundException {

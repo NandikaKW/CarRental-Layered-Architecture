@@ -37,23 +37,26 @@ public class EmployeeBOImpl implements EmployeeBO {
             System.out.println("Error saving employee: " + e.getMessage());
             throw e; // Rethrow or handle exception as needed
         }
+
     }
 
     // Update Employee
     @Override
     public boolean update(EmployeeDto employeeDto) throws SQLException {
-        try {
-            return employeeDAO.update(new Employee(
-                    employeeDto.getEmp_id(),
-                    employeeDto.getEmp_name(),
-                    employeeDto.getAddress(),
-                    employeeDto.getJob(),
-                    employeeDto.getSalary(),
-                    employeeDto.getAdmin_id()
-            ));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+       try{
+           return employeeDAO.update(new Employee(
+                   employeeDto.getEmp_id(),
+                   employeeDto.getEmp_name(),
+                   employeeDto.getAddress(),
+                   employeeDto.getJob(),
+                   employeeDto.getSalary(),
+                   employeeDto.getAdmin_id()
+           ));
+
+       } catch (ClassNotFoundException e) {
+           throw new RuntimeException(e);
+
+       }
     }
 
     // Delete Employee by ID
@@ -64,6 +67,8 @@ public class EmployeeBOImpl implements EmployeeBO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
     // Get all Employees
@@ -89,7 +94,9 @@ public class EmployeeBOImpl implements EmployeeBO {
             ));
         }
         return employeeDtoList;
+
     }
+
 
     // Get the next Employee ID
     @Override
@@ -99,6 +106,7 @@ public class EmployeeBOImpl implements EmployeeBO {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     // Search Employee by ID
@@ -126,4 +134,5 @@ public class EmployeeBOImpl implements EmployeeBO {
 
         return employeeDto;  // Return the EmployeeDto object
     }
+
 }
