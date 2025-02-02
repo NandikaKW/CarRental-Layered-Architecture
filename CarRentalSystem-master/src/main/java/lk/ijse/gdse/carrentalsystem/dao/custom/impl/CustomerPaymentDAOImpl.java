@@ -18,10 +18,7 @@ public class CustomerPaymentDAOImpl implements CustomerPaymentDAO {
     PaymentBO paymentBO= (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT);
 
 
-//    @Override
-//    public boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException {
-//        return CrudUtil.execute("INSERT INTO customerpayment (cust_id, pay_id, payment_date, amount) VALUES (?, ?, ?, ?)", customerPaymentDto.getCust_id(), customerPaymentDto.getPay_id(), customerPaymentDto.getPayment_date(), customerPaymentDto.getAmount());
-//    }
+
 @Override
 public boolean saveCustomerPayment(CustomerPayment customerPayment) throws SQLException, ClassNotFoundException {
     return CrudUtil.execute(
