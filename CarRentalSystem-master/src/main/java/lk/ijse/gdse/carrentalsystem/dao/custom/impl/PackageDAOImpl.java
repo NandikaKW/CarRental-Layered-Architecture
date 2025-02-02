@@ -99,13 +99,13 @@ public class PackageDAOImpl implements PackageDAO {
 
     @Override
     public ArrayList<String> getAllPackageIds() throws SQLException, ClassNotFoundException {
-        // Execute SQL query to get all item IDs
+
         ResultSet rst = CrudUtil.execute("select package_id from package");
 
-        // Create an ArrayList to store the item IDs
+
         ArrayList<String> packageIds = new ArrayList<>();
 
-        // Iterate through the result set and add each item ID to the list
+
         while (rst.next()) {
             packageIds.add(rst.getString(1));
         }
