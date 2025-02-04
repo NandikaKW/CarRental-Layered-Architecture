@@ -11,9 +11,7 @@ import java.util.ArrayList;
 public interface CustomerDAO extends CrudDAO<Customer> {
     String loadCurrentCustomerId() throws SQLException, ClassNotFoundException;
     boolean isNicExists(String nic) throws SQLException, ClassNotFoundException;
-   // boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto, Connection connection) throws SQLException;
-  //  boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto, Connection connection) throws SQLException;
-   // boolean saveCustomerPaymentList(ArrayList<CustomerPaymentDto> customerPaymentDtos, Connection connection) throws SQLException, ClassNotFoundException;
+
 
 
 }

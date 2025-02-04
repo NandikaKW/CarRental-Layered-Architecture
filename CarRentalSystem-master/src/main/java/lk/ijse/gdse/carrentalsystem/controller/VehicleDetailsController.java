@@ -111,15 +111,11 @@ public class VehicleDetailsController  implements Initializable {
 
     @FXML
     private TextField txtVehicleId;
-   // private final RentModel rentModel=new RentModel();
-   // private final CustomerModel customerModel=new CustomerModel();
-   // private  VehicleModel vehicleModel;
+
 
     private final ObservableList<ReserveTM> reserveTMS = FXCollections.observableArrayList();
 
-//    public VehicleDetailsController() {
-//        vehicleModel = new VehicleModel();
-//    }
+
 
 
     @FXML

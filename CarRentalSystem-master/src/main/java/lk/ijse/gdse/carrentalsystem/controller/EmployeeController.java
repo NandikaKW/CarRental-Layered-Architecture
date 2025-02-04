@@ -132,6 +132,7 @@ public class EmployeeController implements Initializable {
 
     }
 
+
     private void refreshTableData() throws SQLException, ClassNotFoundException {
         ArrayList<EmployeeDto> employeeDtos=employeeBO.getAll();
         ObservableList<EmployeeTM> employeeTMS=FXCollections.observableArrayList();

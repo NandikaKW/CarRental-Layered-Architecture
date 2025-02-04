@@ -197,10 +197,7 @@ public class RentServiceController  implements Initializable {
 
     @FXML
     private JFXButton btnReset;
-    //private final  RentModel rentModel=new RentModel();
-    //private final CustomerModel customerModel=new CustomerModel();
-   // private  final VehicleModel vehicleModel=new VehicleModel();
-    //private final PackageModel packageModel=new PackageModel();
+
     private final ObservableList<CartTM> cartTMS = FXCollections.observableArrayList();
 
     private void setDateAndOrderId() {
@@ -269,100 +266,6 @@ public class RentServiceController  implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException, ParseException {
-//        String rentId = txtRentId.getText();
-//        String startDateStr = txtStartDate.getText();  // renamed variable
-//        String endDateStr = txtEndDate.getText();      // renamed variable
-//        String custId = txtCustomerId.getText();
-//        String agreementId = txtAgrimentID.getText(); // added variable for agreement ID
-//
-//        // Define a date format that matches your input format (e.g., "yyyy-MM-dd")
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//
-//        try {
-//            // Parse the date strings into Date objects
-//            Date startDate = dateFormat.parse(startDateStr);
-//            Date endDate = dateFormat.parse(endDateStr);
-//
-//            // Create RentDto with the new agreementId
-//            RentDto dto = new RentDto(rentId, startDate, endDate, custId, agreementId);
-//            boolean isSaved = RentModel.saveRent(dto);
-//
-//            if (isSaved) {
-//                new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully").show();
-//                //loadNextCustomerId();
-//                loadCurrentCustomerId();
-//                loadNextRentId();
-//                refreshPage();
-//            } else {
-//                new Alert(Alert.AlertType.ERROR, "Failed to save rent").show();
-//            }
-//        } catch (ParseException e) {
-//            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
-//        }
-//        Connection connection = null;
-//
-//        try {
-//            connection = DBConnection.getInstance().getConnection();
-//            connection.setAutoCommit(false); // Start transaction
-//
-//            // Retrieve inputs from text fields
-//            String rentId = txtRentId.getText();
-//            String startDateStr = txtStartDate.getText();
-//            String endDateStr = txtEndDate.getText();
-//            String custId = txtCustomerId.getText();
-//            String agreementId = txtAgrimentID.getText();
-//
-//            // Parse dates from input strings
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            Date startDate = dateFormat.parse(startDateStr);
-//            Date endDate = dateFormat.parse(endDateStr);
-//
-//            // Create RentDto object
-//            RentDto rentDto = new RentDto(rentId, startDate, endDate, custId, agreementId);
-//
-//            // Save rent details
-//            boolean isRentSaved = rentBO.saveRent(rentDto);
-//
-//            if (isRentSaved) {
-//                // Save associated vehicle rent details
-//                ArrayList<VechileRentDetailDto> vehicleRentDetailDtos =new ArrayList<>();// Populate this list appropriately
-//                boolean isVehicleRentSaved = vehicleRentDetailBO.saveVehicleRentList(vehicleRentDetailDtos);
-//
-//                if (isVehicleRentSaved) {
-//                    connection.commit(); // Commit the transaction
-//                    new Alert(Alert.AlertType.INFORMATION, "Rent saved successfully!").show();
-//                    loadNextRentId(); // Reload necessary data
-//                    refreshPage();
-//                } else {
-//                    connection.rollback(); // Rollback the transaction
-//                    new Alert(Alert.AlertType.ERROR, "Failed to save vehicle rent details!").show();
-//                }
-//            } else {
-//                connection.rollback(); // Rollback the transaction
-//                new Alert(Alert.AlertType.ERROR, "Failed to save rent details!").show();
-//            }
-//        } catch (ParseException e) {
-//            new Alert(Alert.AlertType.ERROR, "Invalid date format! Use 'yyyy-MM-dd'.").show();
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//            try {
-//                if (connection != null) {
-//                    connection.rollback(); // Rollback the transaction
-//                }
-//            } catch (SQLException rollbackEx) {
-//                rollbackEx.printStackTrace();
-//            }
-//            new Alert(Alert.AlertType.ERROR, "An error occurred while saving rent details!").show();
-//        } finally {
-//            try {
-//                if (connection != null) {
-//                    connection.setAutoCommit(true); // Restore auto-commit
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
 
 
 
@@ -717,64 +620,7 @@ public class RentServiceController  implements Initializable {
     @FXML
     void btnBookVehicleOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-//        if (tblCart.getItems().isEmpty()) {
-//            new Alert(Alert.AlertType.ERROR, "Please add vehicles to cart..!").show();
-//            return;
-//        }
-//        if (cmbVehicleId.getSelectionModel().isEmpty()) {
-//            new Alert(Alert.AlertType.ERROR, "Please select vehicle for place order..!").show();
-//            return;
-//        }
-//
-//        // Load the correct next rent ID
-//        String rentId = rentBO.getNextRentId();
-//        txtRentId.setText(rentId); // update the text field with the new rent ID
-//
-//        ArrayList<VechileRentDetailDto> vechileRentDetailDtos = new ArrayList<>();
-//
-//        // Date format to parse input strings
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//
-//        try {
-//            // Parse start and end dates from input fields
-//            Date startDate = dateFormat.parse(txtStartDate.getText());
-//            Date endDate = dateFormat.parse(txtEndDate.getText());
-//
-//            // Collect data for each item in the cart and add to order details array
-//            for (CartTM cartTM : cartTMS) {
-//                VechileRentDetailDto vechileRentDetailDto = new VechileRentDetailDto(
-//                        cartTM.getVehicle_id(),
-//                        rentId, // use updated rent ID
-//                        startDate,
-//                        endDate,
-//                        Integer.parseInt(cartTM.getQuantity()),
-//                        cmbCondition.getValue()
-//
-//                );
-//                vechileRentDetailDtos.add(vechileRentDetailDto);
-//            }
-//
-//            RentDto rentDto = new RentDto(
-//                    rentId, // use updated rent ID
-//                    startDate,
-//                    endDate,
-//                    txtCustomerId.getText(),
-//                    txtAgrimentID.getText(),
-//                    vechileRentDetailDtos
-//            );
-//
-//            boolean isSaved = RentModel.saveRent(rentDto);
-//
-//            if (isSaved) {
-//                new Alert(Alert.AlertType.INFORMATION, "Book saved..!").show();
-//                refreshPage(); // This should ideally call loadNextRentId() to update the next available ID
-//            } else {
-//                new Alert(Alert.AlertType.ERROR, "Book failed..!").show();
-//            }
-//
-//        } catch (ParseException e) {
-//            new Alert(Alert.AlertType.ERROR, "Invalid date format! Please use yyyy-MM-dd.").show();
-//        }
+
 
 
         if (tblCart.getItems().isEmpty()) {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public interface PaymentDAO extends CrudDAO<Payment> {
     ArrayList<String> getAllPaymentIDs() throws SQLException, ClassNotFoundException;
-   // boolean reducePaymentAmount(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException;
     BigDecimal getAvailablePaymentAmount(String paymentId) throws SQLException, ClassNotFoundException;
     String loadCurrentPaymentId() throws SQLException, ClassNotFoundException;
     boolean reducePaymentAmount(CustomerPayment customerPayment) throws SQLException, ClassNotFoundException;

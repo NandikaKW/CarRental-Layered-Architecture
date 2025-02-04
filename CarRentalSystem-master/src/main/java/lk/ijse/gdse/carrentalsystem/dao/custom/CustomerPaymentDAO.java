@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CustomerPaymentDAO extends CrudDAO<CustomerPayment> {
-   // boolean saveCustomerPayment(CustomerPaymentDto customerPaymentDto) throws SQLException, ClassNotFoundException;
-   // boolean saveCustomerPaymentList(ArrayList<CustomerPaymentDto> customerPaymentDtos) throws SQLException, ClassNotFoundException;
     boolean saveCustomerPaymentList(ArrayList<CustomerPayment> customerPayments) throws SQLException, ClassNotFoundException;
     boolean saveCustomerPayment(CustomerPayment customerPayment) throws SQLException, ClassNotFoundException;
 
